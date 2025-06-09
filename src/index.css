@@ -1,0 +1,104 @@
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Chikankari Connect Design System */
+
+@layer base {
+  :root {
+    --background: 254 253 248;
+    --foreground: 49 46 129;
+
+    --card: 255 255 255;
+    --card-foreground: 49 46 129;
+
+    --popover: 255 255 255;
+    --popover-foreground: 49 46 129;
+
+    --primary: 79 70 229;
+    --primary-foreground: 255 255 255;
+
+    --secondary: 254 243 199;
+    --secondary-foreground: 180 83 9;
+
+    --muted: 253 224 204;
+    --muted-foreground: 120 113 108;
+
+    --accent: 255 228 230;
+    --accent-foreground: 225 29 72;
+
+    --destructive: 220 38 38;
+    --destructive-foreground: 254 226 226;
+
+    --border: 229 231 235;
+    --input: 229 231 235;
+    --ring: 79 70 229;
+
+    --radius: 0.5rem;
+  }
+
+  .dark {
+    --background: 49 46 129;
+    --foreground: 254 253 248;
+
+    --card: 67 56 202;
+    --card-foreground: 254 253 248;
+
+    --popover: 67 56 202;
+    --popover-foreground: 254 253 248;
+
+    --primary: 254 253 248;
+    --primary-foreground: 79 70 229;
+
+    --secondary: 180 83 9;
+    --secondary-foreground: 254 243 199;
+
+    --muted: 120 113 108;
+    --muted-foreground: 253 224 204;
+
+    --accent: 225 29 72;
+    --accent-foreground: 255 228 230;
+
+    --destructive: 185 28 28;
+    --destructive-foreground: 254 226 226;
+
+    --border: 75 85 99;
+    --input: 75 85 99;
+    --ring: 129 140 248;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply bg-background text-foreground font-sans;
+  }
+
+  /* Hindi font support */
+  .hindi-text {
+    font-family: 'Noto Sans Devanagari', sans-serif;
+  }
+
+  /* Chikankari pattern backgrounds */
+  .chikankari-pattern {
+    background-image: url("data:image/svg+xml,%3Csvg width='40' height='40' viewBox='0 0 40 40' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='%23f1f5f9' fill-opacity='0.05' fill-rule='evenodd'%3E%3Cpath d='M20 20c0 11.046-8.954 20-20 20s-20-8.954-20-20 8.954-20 20-20 20 8.954 20 20zm-20-8c-4.418 0-8 3.582-8 8s3.582 8 8 8 8-3.582 8-8-3.582-8-8-8z'/%3E%3C/g%3E%3C/svg%3E");
+  }
+}
+
+@layer utilities {
+  .text-balance {
+    text-wrap: balance;
+  }
+  
+  .hover-lift {
+    @apply transition-transform duration-200 hover:scale-105;
+  }
+
+  .glass-effect {
+    @apply backdrop-blur-sm bg-white/80 border border-white/20;
+  }
+}
