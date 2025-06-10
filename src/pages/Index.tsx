@@ -487,21 +487,21 @@ const Index = () => {
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             {[
               {
-                image: "https://images.unsplash.com/photo-1649972904349-6e44c42644a7?w=400&h=300&fit=crop",
+                image: "https://i.etsystatic.com/16387285/r/il/0dfa61/2532111172/il_fullxfull.2532111172_hl3g.jpg",
                 title: language === 'hi' ? 'सफेद चिकनकारी कुर्ता' : 'White Chikankari Kurta',
                 price: '₹2,500',
                 rating: 4.8,
                 reviews: 124
               },
               {
-                image: "https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?w=400&h=300&fit=crop",
+                image: "https://images.unsplash.com/photo-1594633312681-425c7b97ccd1?w=400&h=300&fit=crop&q=80",
                 title: language === 'hi' ? 'पीला चिकनकारी दुपट्टा' : 'Yellow Chikankari Dupatta',
                 price: '₹1,200',
                 rating: 4.9,
                 reviews: 89
               },
               {
-                image: "https://images.unsplash.com/photo-1518770660439-4636190af475?w=400&h=300&fit=crop",
+                image: "https://images.unsplash.com/photo-1583391733975-b72f1ac82257?w=400&h=300&fit=crop&q=80",
                 title: language === 'hi' ? 'नीला चिकनकारी सूट' : 'Blue Chikankari Suit',
                 price: '₹3,800',
                 rating: 4.7,
@@ -730,8 +730,8 @@ const Index = () => {
           </div>
           <div className="border-t border-gray-800 mt-8 pt-8 text-center text-gray-400">
             <p>{language === 'hi' 
-              ? '© 2024 चिकनकारी कनेक्ट। सभी अधिकार सुरक्षित।'
-              : '© 2024 Chikankari Connect. All rights reserved.'}
+              ? '© 2025 चिकनकारी कनेक्ट। सभी अधिकार सुरक्षित।'
+              : '© 2025 Chikankari Connect. All rights reserved.'}
             </p>
           </div>
         </div>

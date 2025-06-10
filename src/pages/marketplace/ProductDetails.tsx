@@ -67,7 +67,11 @@ const ProductDetails = () => {
     nameHi: "पारंपरिक सफेद कुर्ता",
     price: "₹2,500",
     originalPrice: "₹3,000",
-    images: ["/placeholder.svg", "/placeholder.svg", "/placeholder.svg"],
+    images: [
+      "https://images.unsplash.com/photo-1583391733956-6c78c2018580?w=400&h=400&fit=crop&q=80",
+      "https://images.unsplash.com/photo-1594633312681-425c7b97ccd1?w=400&h=400&fit=crop&q=80",
+      "https://images.unsplash.com/photo-1583391733975-b72f1ac82257?w=400&h=400&fit=crop&q=80"
+    ],
     description: "Beautiful hand-embroidered white kurta with traditional chikankari work. Perfect for festivals and special occasions.",
     descriptionHi: "पारंपरिक चिकनकारी काम के साथ सुंदर हाथ से कढ़ाई किया गया सफेद कुर्ता। त्योहारों और विशेष अवसरों के लिए बिल्कुल सही।",
     artisan: {
@@ -89,9 +93,9 @@ const ProductDetails = () => {
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-indigo-50 via-white to-rose-50">
+    <div className="min-h-screen bg-gradient-to-br from-indigo-50 via-white to-rose-50 dark:from-gray-900 dark:via-gray-800 dark:to-gray-900">
       {/* Header */}
-      <div className="bg-white/80 backdrop-blur-sm border-b border-gray-200 p-4 sticky top-0 z-10">
+      <div className="bg-white/80 backdrop-blur-sm border-b border-gray-200 p-4 sticky top-0 z-10 dark:bg-gray-900/80 dark:border-gray-700">
         <div className="flex justify-between items-center max-w-md mx-auto">
           <Link to="/marketplace" className="p-2 hover:bg-white/50 rounded-lg transition-colors">
             <ArrowLeft className="w-6 h-6 text-indigo-600" />
@@ -141,7 +145,7 @@ const ProductDetails = () => {
           {/* Product Info */}
           <div>
             <h1 className={cn(
-              "text-2xl font-bold text-indigo-900 mb-2",
+              "text-2xl font-bold text-indigo-900 dark:text-indigo-100 mb-2",
               language === 'hi' ? 'hindi-text' : ''
             )}>
               {language === 'hi' ? product.nameHi : product.name}
@@ -185,16 +189,16 @@ const ProductDetails = () => {
           </div>
 
           {/* Description */}
-          <Card className="bg-white/80 backdrop-blur-sm border-0 shadow-lg">
+          <Card className="bg-white/80 backdrop-blur-sm border-0 shadow-lg dark:bg-gray-800/80 dark:border-gray-700">
             <CardContent className="p-4">
               <h3 className={cn(
-                "font-semibold text-indigo-900 mb-3",
+                "font-semibold text-indigo-900 dark:text-indigo-100 mb-3",
                 language === 'hi' ? 'hindi-text' : ''
               )}>
                 {content[language].description}
               </h3>
               <p className={cn(
-                "text-gray-700 leading-relaxed",
+                "text-gray-700 dark:text-gray-300 leading-relaxed",
                 language === 'hi' ? 'hindi-text' : ''
               )}>
                 {language === 'hi' ? product.descriptionHi : product.description}
@@ -203,7 +207,7 @@ const ProductDetails = () => {
           </Card>
 
           {/* Specifications */}
-          <Card className="bg-white/80 backdrop-blur-sm border-0 shadow-lg">
+          <Card className="bg-white/80 backdrop-blur-sm border-0 shadow-lg dark:bg-gray-800/80 dark:border-gray-700">
             <CardContent className="p-4">
               <h3 className={cn(
                 "font-semibold text-indigo-900 mb-3",
@@ -254,7 +258,7 @@ const ProductDetails = () => {
           </Card>
 
           {/* Artisan Info */}
-          <Card className="bg-white/80 backdrop-blur-sm border-0 shadow-lg">
+          <Card className="bg-white/80 backdrop-blur-sm border-0 shadow-lg dark:bg-gray-800/80 dark:border-gray-700">
             <CardContent className="p-4">
               <h3 className={cn(
                 "font-semibold text-indigo-900 mb-3",
@@ -300,7 +304,7 @@ const ProductDetails = () => {
       </div>
 
       {/* Bottom Action Bar */}
-      <div className="fixed bottom-0 left-0 right-0 bg-white/90 backdrop-blur-sm border-t p-4">
+      <div className="fixed bottom-0 left-0 right-0 bg-white/90 backdrop-blur-sm border-t p-4 dark:bg-gray-900/90 dark:border-gray-700">
         <div className="max-w-md mx-auto">
           <Button className={cn(
             "w-full bg-indigo-600 hover:bg-indigo-700 text-lg py-3",

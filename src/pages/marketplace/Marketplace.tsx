@@ -42,7 +42,7 @@ const Marketplace = () => {
       price: "₹2,500",
       artisan: "राम कुमार",
       rating: 4.8,
-      image: "/placeholder.svg",
+      image: "https://images.unsplash.com/photo-1583391733956-6c78c2018580?w=400&h=300&fit=crop&q=80",
       isFavorite: false
     },
     {
@@ -52,7 +52,7 @@ const Marketplace = () => {
       price: "₹8,000",
       artisan: "सुनीता देवी",
       rating: 4.9,
-      image: "/placeholder.svg",
+      image: "https://images.unsplash.com/photo-1610030469983-98e550d6193c?w=400&h=300&fit=crop&q=80",
       isFavorite: true
     },
     {
@@ -62,18 +62,18 @@ const Marketplace = () => {
       price: "₹3,200",
       artisan: "मोहन लाल",
       rating: 4.7,
-      image: "/placeholder.svg",
+      image: "https://images.unsplash.com/photo-1583391733975-b72f1ac82257?w=400&h=300&fit=crop&q=80",
       isFavorite: false
     }
   ];
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-indigo-50 via-white to-rose-50 pb-20">
+    <div className="min-h-screen bg-gradient-to-br from-indigo-50 via-white to-rose-50 dark:from-gray-900 dark:via-gray-800 dark:to-gray-900 pb-20">
       {/* Header */}
-      <div className="bg-white/80 backdrop-blur-sm border-b border-gray-200 p-4">
+      <div className="bg-white/80 backdrop-blur-sm border-b border-gray-200 p-4 dark:bg-gray-900/80 dark:border-gray-700">
         <div className="flex justify-between items-center max-w-md mx-auto mb-4">
           <h1 className={cn(
-            "text-xl font-bold text-indigo-900",
+            "text-xl font-bold text-indigo-900 dark:text-indigo-100",
             language === 'hi' ? 'hindi-text' : ''
           )}>
             {content[language].marketplace}
@@ -89,10 +89,10 @@ const Marketplace = () => {
               placeholder={content[language].search}
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
-              className="pl-10"
+              className="pl-10 dark:bg-gray-700 dark:border-gray-600 dark:text-white dark:placeholder-gray-400"
             />
           </div>
-          <Button variant="outline" size="icon">
+          <Button variant="outline" size="icon" className="dark:border-gray-600 dark:text-gray-300 dark:hover:bg-gray-700">
             <Filter className="w-4 h-4" />
           </Button>
         </div>
@@ -102,7 +102,7 @@ const Marketplace = () => {
         {/* Featured Section */}
         <div className="flex justify-between items-center mb-4">
           <h2 className={cn(
-            "text-lg font-semibold text-indigo-900",
+            "text-lg font-semibold text-indigo-900 dark:text-indigo-100",
             language === 'hi' ? 'hindi-text' : ''
           )}>
             {content[language].featured}
@@ -119,7 +119,7 @@ const Marketplace = () => {
         <div className="grid grid-cols-2 gap-4">
           {products.map((product) => (
             <Link key={product.id} to={`/marketplace/product/${product.id}`}>
-              <Card className="bg-white/80 backdrop-blur-sm border-0 shadow-lg hover:shadow-xl transition-all hover-lift">
+              <Card className="bg-white/80 backdrop-blur-sm border-0 shadow-lg hover:shadow-xl transition-all hover-lift dark:bg-gray-800/80 dark:border-gray-700">
                 <CardContent className="p-0">
                   <div className="relative">
                     <img 
@@ -128,7 +128,7 @@ const Marketplace = () => {
                       className="w-full h-40 object-cover rounded-t-lg"
                     />
                     <button 
-                      className="absolute top-2 right-2 p-1.5 bg-white/80 backdrop-blur-sm rounded-full"
+                      className="absolute top-2 right-2 p-1.5 bg-white/80 backdrop-blur-sm rounded-full dark:bg-gray-800/80"
                       onClick={(e) => {
                         e.preventDefault();
                         // Handle favorite toggle
@@ -143,17 +143,17 @@ const Marketplace = () => {
                   
                   <div className="p-3">
                     <h3 className={cn(
-                      "font-semibold text-indigo-900 text-sm mb-1 line-clamp-2",
+                      "font-semibold text-indigo-900 dark:text-indigo-100 text-sm mb-1 line-clamp-2",
                       language === 'hi' ? 'hindi-text' : ''
                     )}>
                       {language === 'hi' ? product.nameHi : product.name}
                     </h3>
                     
-                    <p className="text-lg font-bold text-indigo-600 mb-2">
+                    <p className="text-lg font-bold text-indigo-600 dark:text-indigo-400 mb-2">
                       {product.price}
                     </p>
                     
-                    <div className="flex items-center justify-between text-xs text-gray-600">
+                    <div className="flex items-center justify-between text-xs text-gray-600 dark:text-gray-400">
                       <span className={cn(
                         language === 'hi' ? 'hindi-text' : ''
                       )}>
