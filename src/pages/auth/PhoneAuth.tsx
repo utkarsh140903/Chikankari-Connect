@@ -5,7 +5,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Alert, AlertDescription } from "@/components/ui/alert";
 import { Phone, AlertCircle, CheckCircle, Shield, Timer } from "lucide-react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useSearchParams } from "react-router-dom";
 import { AppHeader } from "@/components/layout/AppHeader";
 import { cn } from "@/lib/utils";
 
@@ -18,12 +18,14 @@ const PhoneAuth = () => {
   const [error, setError] = useState('');
   const [resendTimer, setResendTimer] = useState(0);
   const [attempts, setAttempts] = useState(0);
+  const [searchParams] = useSearchParams();
+  const role = searchParams.get('role');
   const navigate = useNavigate();
 
   const content = {
     en: {
-      title: "Welcome Back",
-      subtitle: "Sign in to continue to your account",
+      title: role ? `Welcome, ${role.charAt(0).toUpperCase() + role.slice(1)}!` : "Welcome Back",
+      subtitle: role ? `Complete your ${role} registration` : "Sign in to continue to your account",
       phoneLabel: "Mobile Number",
       otpLabel: "Enter Verification Code",
       sendOtp: "Send OTP",
@@ -45,8 +47,8 @@ const PhoneAuth = () => {
       changeNumber: "Change Number"
     },
     hi: {
-      title: "वापस स्वागत है",
-      subtitle: "अपने खाते में जारी रखने के लिए साइन इन करें",
+      title: role ? `स्वागत है, ${role === 'customer' ? 'ग्राहक' : role === 'artisan' ? 'कारीगर' : 'डिजाइनर'}!` : "वापस स्वागत है",
+      subtitle: role ? `अपना ${role === 'customer' ? 'ग्राहक' : role === 'artisan' ? 'कारीगर' : 'डिजाइनर'} पंजीकरण पूरा करें` : "अपने खाते में जारी रखने के लिए साइन इन करें",
       phoneLabel: "मोबाइल नंबर",
       otpLabel: "सत्यापन कोड दर्ज करें",
       sendOtp: "OTP भेजें",
@@ -141,7 +143,13 @@ const PhoneAuth = () => {
       
       // Simulate random success/failure for demo
       if (otp === '123456' || Math.random() > 0.3) {
-        navigate('/auth/setup');
+        // Navigate to role-specific setup
+        if (role && ['customer', 'artisan', 'designer'].includes(role)) {
+          navigate(`/auth/setup/${role}`);
+        } else {
+          // If no role is specified, redirect to role selection
+          navigate('/');
+        }
       } else {
         setError(content[language].invalidOtp);
         setAttempts(prev => prev + 1);
@@ -165,7 +173,7 @@ const PhoneAuth = () => {
         title={content[language].title}
         titleHi={content.hi.title}
         showBack={true}
-        backTo="/"
+        backTo={role ? `/?role=${role}` : "/"}
         language={language}
         onLanguageChange={setLanguage}
       />

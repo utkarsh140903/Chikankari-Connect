@@ -56,7 +56,7 @@ const Index = () => {
             title: "Customer",
             description: "Discover authentic Chikankari products",
             icon: ShoppingBag,
-            path: "/marketplace"
+            path: "/auth/phone?role=customer"
           },
           {
             id: "artisan",
@@ -148,7 +148,7 @@ const Index = () => {
             title: "ग्राहक",
             description: "प्रामाणिक चिकनकारी उत्पाद खोजें",
             icon: ShoppingBag,
-            path: "/marketplace"
+            path: "/auth/phone?role=customer"
           },
           {
             id: "artisan",
@@ -288,7 +288,10 @@ const Index = () => {
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
             <Button size="lg" asChild className="text-lg px-8 py-6">
-              <Link to="/auth/phone">
+              <Link to="#role-selection" onClick={(e) => {
+                e.preventDefault();
+                document.querySelector('#role-selection')?.scrollIntoView({ behavior: 'smooth' });
+              }}>
                 {content[language].hero.getStarted}
                 <ArrowRight className="w-5 h-5 ml-2" />
               </Link>
@@ -340,7 +343,7 @@ const Index = () => {
       </section>
 
       {/* Role Selection */}
-      <section className="px-4 py-16 bg-white/50 dark:bg-gray-800/50">
+      <section id="role-selection" className="px-4 py-16 bg-white/50 dark:bg-gray-800/50">
         <div className="max-w-4xl mx-auto text-center">
           <h3 className={cn(
             "text-3xl font-bold text-indigo-900 mb-4 dark:text-indigo-100",
@@ -494,14 +497,14 @@ const Index = () => {
                 reviews: 124
               },
               {
-                image: "https://images.unsplash.com/photo-1594633312681-425c7b97ccd1?w=400&h=300&fit=crop&q=80",
+                image: "https://i.pinimg.com/originals/ff/2c/8b/ff2c8bbbbf9ceb9ff5afdaaa6ce84c3e.jpg",
                 title: language === 'hi' ? 'पीला चिकनकारी दुपट्टा' : 'Yellow Chikankari Dupatta',
                 price: '₹1,200',
                 rating: 4.9,
                 reviews: 89
               },
               {
-                image: "https://images.unsplash.com/photo-1583391733975-b72f1ac82257?w=400&h=300&fit=crop&q=80",
+                image: "https://www.dress365days.com/cdn/shop/products/powder-blue-chikankari-anarkali-suit-966_1445x.jpg?v=1626543406",
                 title: language === 'hi' ? 'नीला चिकनकारी सूट' : 'Blue Chikankari Suit',
                 price: '₹3,800',
                 rating: 4.7,
@@ -664,7 +667,10 @@ const Index = () => {
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <Button size="lg" variant="outline" className="bg-white text-indigo-600 hover:bg-gray-100 border-white" asChild>
-              <Link to="/auth/phone">
+              <Link to="#role-selection" onClick={(e) => {
+                e.preventDefault();
+                document.querySelector('#role-selection')?.scrollIntoView({ behavior: 'smooth' });
+              }}>
                 {content[language].cta.button}
                 <ArrowRight className="w-5 h-5 ml-2" />
               </Link>

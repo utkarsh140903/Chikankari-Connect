@@ -51,7 +51,7 @@ export const MobileNav = ({ language }: MobileNavProps) => {
   ];
 
   // Don't show mobile nav on auth pages
-  const hideNavPages = ['/auth/phone', '/auth/setup'];
+  const hideNavPages = ['/auth/phone', '/auth/setup/customer', '/auth/setup/artisan', '/auth/setup/designer'];
   if (hideNavPages.includes(location.pathname)) {
     return null;
   }
