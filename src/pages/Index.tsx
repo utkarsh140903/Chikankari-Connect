@@ -361,7 +361,7 @@ const Index = () => {
             {content[language].roleSelection.roles.map((role, index) => {
               const Icon = role.icon;
               return (
-                <Card key={role.id} className="group border-0 shadow-lg hover:shadow-2xl transition-all duration-500 hover:-translate-y-2 hover:scale-105 dark:bg-gray-800 dark:border-gray-700 relative overflow-hidden">
+                <Card key={role.id} className="group border-0 shadow-lg hover:shadow-2xl transition-all duration-500 hover:-translate-y-2 hover:scale-105 bg-white dark:bg-gray-800 dark:border-gray-700 relative overflow-hidden">
                   <div className="absolute inset-0 bg-gradient-to-br from-indigo-500/5 to-rose-500/5 group-hover:from-indigo-500/10 group-hover:to-rose-500/10 transition-all duration-500" />
                   <CardContent className="p-8 text-center relative z-10">
                     <div className="w-20 h-20 mx-auto mb-6 bg-gradient-to-br from-indigo-100 to-rose-100 dark:from-indigo-900 dark:to-rose-900 rounded-2xl flex items-center justify-center group-hover:scale-110 transition-transform duration-300 shadow-lg">
@@ -452,7 +452,7 @@ const Index = () => {
             {content[language].features.map((feature, index) => {
               const Icon = feature.icon;
               return (
-                <Card key={index} className="group border-0 shadow-lg hover:shadow-2xl transition-all duration-500 hover:-translate-y-2 dark:bg-gray-800 dark:border-gray-700 relative overflow-hidden">
+                <Card key={index} className="group border-0 shadow-lg hover:shadow-2xl transition-all duration-500 hover:-translate-y-2 bg-white dark:bg-gray-800 dark:border-gray-700 relative overflow-hidden">
                   <div className="absolute inset-0 bg-gradient-to-br from-indigo-500/5 to-rose-500/5 group-hover:from-indigo-500/10 group-hover:to-rose-500/10 transition-all duration-500" />
                   <CardContent className="p-8 text-center relative z-10">
                     <div className="w-16 h-16 mx-auto mb-6 bg-gradient-to-br from-indigo-100 to-rose-100 dark:from-indigo-900 dark:to-rose-900 rounded-2xl flex items-center justify-center group-hover:scale-110 transition-transform duration-300 shadow-lg">
