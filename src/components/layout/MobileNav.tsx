@@ -17,6 +17,22 @@ interface MobileNavProps {
 export const MobileNav = ({ language }: MobileNavProps) => {
   const location = useLocation();
 
+  // Determine profile path based on current route or user role
+  const getProfilePath = () => {
+    // Check current route to determine user type
+    if (location.pathname.startsWith('/customer')) {
+      return '/customer/profile';
+    } else if (location.pathname.startsWith('/artisan')) {
+      return '/artisan/profile';
+    } else if (location.pathname.startsWith('/designer')) {
+      return '/designer/profile';
+    }
+    
+    // For marketplace and other general pages, default to artisan profile
+    // You can modify this logic based on actual logged-in user role
+    return '/artisan/profile';
+  };
+
   const navItems: NavItem[] = [
     {
       icon: Home,
@@ -46,7 +62,7 @@ export const MobileNav = ({ language }: MobileNavProps) => {
       icon: User,
       label: "Profile",
       labelHi: "प्रोफ़ाइल",
-      path: "/artisan/profile"
+      path: getProfilePath()
     }
   ];
 

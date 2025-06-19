@@ -5,6 +5,7 @@ import { Button } from "@/components/ui/button";
 import { Search, Filter, Star, Heart, MapPin, ShoppingCart, Plus } from "lucide-react";
 import { MobileNav } from "@/components/layout/MobileNav";
 import { LanguageToggle } from "@/components/LanguageToggle";
+import { ThemeToggle } from "@/components/ThemeToggle";
 import { Link } from "react-router-dom";
 import { cn } from "@/lib/utils";
 import { Product } from "@/lib/mockData";
@@ -148,12 +149,15 @@ const Marketplace = () => {
             "text-xl md:text-2xl lg:text-3xl font-bold text-indigo-900 dark:text-indigo-100",
             language === 'hi' ? 'hindi-text' : ''
           )}>{content[language].marketplace}</h1>
-          <LanguageToggle language={language} onLanguageChange={setLanguage} />
+          <div className="flex items-center gap-2">
+            <ThemeToggle />
+            <LanguageToggle language={language} onLanguageChange={setLanguage} />
+          </div>
         </div>
 
         {/* Search Bar */}
-        <div className="max-w-2xl mx-auto flex gap-2">
-          <div className="flex-1 relative">
+        <div className="max-w-2xl mx-auto">
+          <div className="relative">
             <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-4 h-4" />
             <Input
               placeholder={content[language].search}
@@ -162,9 +166,6 @@ const Marketplace = () => {
               className="pl-10 dark:bg-gray-700 dark:border-gray-600 dark:text-white dark:placeholder-gray-400"
             />
           </div>
-          <Button variant="outline" size="icon" className="dark:border-gray-600 dark:text-gray-300 dark:hover:bg-gray-700">
-            <Filter className="w-4 h-4" />
-          </Button>
         </div>
       </div>
 

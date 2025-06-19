@@ -1,7 +1,8 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
+import { useToast } from "@/components/ui/use-toast";
 import { 
   Heart, 
   ShoppingBag, 
@@ -15,15 +16,71 @@ import {
   ArrowRight,
   Plus,
   Search,
-  Eye
+  Eye,
+  Settings,
+  Activity,
+  Menu,
+  X
 } from "lucide-react";
 import { MobileNav } from "@/components/layout/MobileNav";
 import { LanguageToggle } from "@/components/LanguageToggle";
+import { ThemeToggle } from "@/components/ThemeToggle";
 import { cn } from "@/lib/utils";
+import { mockProducts } from "@/lib/mockData";
 import { Link } from "react-router-dom";
 
 const CustomerDashboard = () => {
   const [language, setLanguage] = useState<'en' | 'hi'>('en');
+  const [isLoading, setIsLoading] = useState(true);
+  const [screenSize, setScreenSize] = useState<'mobile' | 'tablet' | 'desktop'>('desktop');
+  const { toast } = useToast();
+
+  // Screen size detection
+  useEffect(() => {
+    const handleResize = () => {
+      const width = window.innerWidth;
+      if (width < 768) {
+        setScreenSize('mobile');
+      } else if (width < 1024) {
+        setScreenSize('tablet');
+      } else {
+        setScreenSize('desktop');
+      }
+    };
+
+    handleResize();
+    window.addEventListener('resize', handleResize);
+    
+    // Simulate loading
+    const timer = setTimeout(() => setIsLoading(false), 800);
+    
+    return () => {
+      window.removeEventListener('resize', handleResize);
+      clearTimeout(timer);
+    };
+  }, []);
+
+  // Handler functions for interactive elements
+  const handleStatClick = (statTitle: string) => {
+    toast({
+      title: statTitle,
+      description: language === 'hi' 
+        ? "विस्तृत दृश्य जल्द आ रहा है!"
+        : "Detailed view coming soon!",
+      variant: "default",
+    });
+  };
+
+  const handleViewAllOrders = () => {
+    toast({
+      title: language === 'hi' ? "सभी ऑर्डर" : "All Orders",
+      description: language === 'hi' 
+        ? "ऑर्डर पेज पर जा रहे हैं..."
+        : "Navigating to orders page...",
+      variant: "default",
+    });
+  };
+
 
   const content = {
     en: {
@@ -52,11 +109,9 @@ const CustomerDashboard = () => {
         title: "Recommended for You",
         basedOn: "Based on your preferences"
       },
-      featuredArtisans: {
-        title: "Featured Artisans",
-        viewProfile: "View Profile",
-        follow: "Follow"
-      }
+      notifications: "Notifications",
+      settings: "Settings",
+      greeting: "Good morning"
     },
     hi: {
       dashboard: "मेरा डैशबोर्ड",
@@ -84,11 +139,9 @@ const CustomerDashboard = () => {
         title: "आपके लिए सुझाव",
         basedOn: "आपकी प्राथमिकताओं के आधार पर"
       },
-      featuredArtisans: {
-        title: "विशेष कारीगर",
-        viewProfile: "प्रोफाइल देखें",
-        follow: "फॉलो करें"
-      }
+      notifications: "सूचनाएं",
+      settings: "सेटिंग्स",
+      greeting: "सुप्रभात"
     }
   };
 
@@ -150,325 +203,416 @@ const CustomerDashboard = () => {
     }
   ];
 
-  const recentOrders = [
-    {
-      id: "ORD-001",
-      product: "Traditional White Kurta",
-      productHi: "पारंपरिक सफेद कुर्ता",
-      artisan: "राम कुमार",
-      status: "Delivered",
-      statusHi: "डिलीवर किया गया",
-      price: "₹2,500",
-      date: "Dec 15",
-      image: "https://images.unsplash.com/photo-1583391733956-6c78c2018580?w=100&h=100&fit=crop&q=80"
-    },
-    {
-      id: "ORD-002",
-      product: "Elegant Chikan Saree",
-      productHi: "सुंदर चिकन साड़ी",
-      artisan: "सुनीता देवी",
-      status: "In Transit",
-      statusHi: "ट्रांजिट में",
-      price: "₹8,000",
-      date: "Dec 18",
-      image: "https://images.unsplash.com/photo-1610030469983-98e550d6193c?w=100&h=100&fit=crop&q=80"
-    }
-  ];
+  // Use mock data for recent orders and recommendations
+  const recentOrders = mockProducts.slice(0, 2);
+  const recommendations = mockProducts.slice(2, 5);
 
-  const recommendations = [
-    {
-      id: 1,
-      name: "Designer Palazzo Set",
-      nameHi: "डिज़ाइनर पलाज़ो सेट",
-      price: "₹3,200",
-      rating: 4.7,
-      image: "https://images.unsplash.com/photo-1583391733975-b72f1ac82257?w=200&h=200&fit=crop&q=80"
-    },
-    {
-      id: 2,
-      name: "Festive Dupatta",
-      nameHi: "त्योहारी दुपट्टा",
-      price: "₹1,800",
-      rating: 4.8,
-      image: "https://images.unsplash.com/photo-1594633312681-425c7b97ccd1?w=200&h=200&fit=crop&q=80"
-    }
-  ];
-
-  const featuredArtisans = [
-    {
-      id: 1,
-      name: "Mohammad Ali",
-      specialization: "Shadow Work Expert",
-      specializationHi: "शैडो वर्क विशेषज्ञ",
-      rating: 4.9,
-      location: "Lucknow",
-      followers: 234,
-      avatar: "/placeholder.svg"
-    },
-    {
-      id: 2,
-      name: "Fatima Sheikh",
-      specialization: "Phanda Work Master",
-      specializationHi: "फांदा वर्क मास्टर",
-      rating: 4.8,
-      location: "Lucknow",
-      followers: 189,
-      avatar: "/placeholder.svg"
-    }
-  ];
+  // Loading skeleton
+  if (isLoading) {
+    return (
+      <div className="min-h-screen bg-gradient-to-br from-indigo-50 via-white to-rose-50 dark:from-gray-900 dark:via-gray-800 dark:to-indigo-900 flex items-center justify-center">
+        <div className="animate-pulse space-y-4 w-full max-w-md mx-auto p-4">
+          <div className="h-8 bg-gray-200 dark:bg-gray-700 rounded w-3/4"></div>
+          <div className="h-4 bg-gray-200 dark:bg-gray-700 rounded w-1/2"></div>
+          <div className="grid grid-cols-2 gap-4">
+            {[...Array(4)].map((_, i) => (
+              <div key={i} className="h-24 bg-gray-200 dark:bg-gray-700 rounded"></div>
+            ))}
+          </div>
+        </div>
+      </div>
+    );
+  }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-indigo-50 via-white to-rose-50 dark:from-gray-900 dark:via-gray-800 dark:to-gray-900 pb-20">
-      {/* Header */}
-      <div className="bg-white/80 backdrop-blur-sm border-b border-gray-200 p-4 dark:bg-gray-900/80 dark:border-gray-700">
-        <div className="flex justify-between items-center max-w-md mx-auto">
-          <div>
-            <h1 className={cn(
-              "text-xl font-bold text-indigo-900 dark:text-indigo-100",
-              language === 'hi' ? 'hindi-text' : ''
-            )}>
-              {content[language].dashboard}
-            </h1>
-            <p className={cn(
-              "text-sm text-gray-600 dark:text-gray-400",
-              language === 'hi' ? 'hindi-text' : ''
-            )}>
-              {content[language].welcome}
-            </p>
-          </div>
-          <LanguageToggle language={language} onLanguageChange={setLanguage} />
-        </div>
-      </div>
-
-      <div className="max-w-md mx-auto p-4 space-y-6">
-        {/* Stats Grid */}
-        <div className="grid grid-cols-2 gap-4">
-          {stats.map((stat, index) => {
-            const Icon = stat.icon;
-            return (
-              <Card key={index} className="bg-white/80 backdrop-blur-sm border-0 shadow-lg dark:bg-gray-800/80">
-                <CardContent className="p-4">
-                  <div className="flex items-center justify-between mb-2">
-                    <div className={cn("w-8 h-8 rounded-lg flex items-center justify-center", stat.color)}>
-                      <Icon className="w-4 h-4" />
-                    </div>
-                  </div>
-                  <p className="text-2xl font-bold text-indigo-900 dark:text-indigo-100">{stat.value}</p>
-                  <p className={cn(
-                    "text-xs text-gray-600 dark:text-gray-400 mb-1",
-                    language === 'hi' ? 'hindi-text' : ''
-                  )}>
-                    {stat.title}
-                  </p>
-                  <p className="text-xs text-green-600 dark:text-green-400">{stat.change}</p>
-                </CardContent>
-              </Card>
-            );
-          })}
-        </div>
-
-        {/* Quick Actions */}
-        <Card className="bg-white/80 backdrop-blur-sm border-0 shadow-lg dark:bg-gray-800/80">
-          <CardHeader className="pb-3">
-            <CardTitle className={cn(
-              "text-lg text-indigo-900 dark:text-indigo-100",
-              language === 'hi' ? 'hindi-text' : ''
-            )}>
-              {content[language].quickActions.title}
-            </CardTitle>
-          </CardHeader>
-          <CardContent>
-            <div className="grid grid-cols-2 gap-3">
-              {quickActions.map((action, index) => {
-                const Icon = action.icon;
-                return (
-                  <Button
-                    key={index}
-                    asChild
-                    className={cn(
-                      "h-auto p-4 flex flex-col items-center gap-2",
-                      action.color,
-                      language === 'hi' ? 'hindi-text' : ''
-                    )}
-                  >
-                    <Link to={action.path}>
-                      <Icon className="w-5 h-5" />
-                      <span className="text-xs text-center">{action.title}</span>
-                    </Link>
-                  </Button>
-                );
-              })}
-            </div>
-          </CardContent>
-        </Card>
-
-        {/* Recent Orders */}
-        <Card className="bg-white/80 backdrop-blur-sm border-0 shadow-lg dark:bg-gray-800/80">
-          <CardHeader className="pb-3">
-            <div className="flex justify-between items-center">
-              <CardTitle className={cn(
-                "text-lg text-indigo-900 dark:text-indigo-100",
+    <div className="min-h-screen bg-gradient-to-br from-indigo-50 via-white to-rose-50 dark:from-gray-900 dark:via-gray-800 dark:to-indigo-900 pb-20 sm:pb-24 lg:pb-16 transition-colors duration-300">
+      {/* Enhanced Header */}
+      <header className="bg-white/90 dark:bg-gray-800/90 backdrop-blur-md border-b border-gray-200/50 dark:border-gray-700/50 sticky top-0 z-50 transition-all duration-300 shadow-sm">
+        <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="flex justify-between items-center py-4 sm:py-6">
+            {/* Left section - Greeting and info */}
+            <div className="flex-1 min-w-0 pr-4">
+              <h1 className={cn(
+                "text-lg sm:text-xl md:text-2xl lg:text-3xl font-bold text-indigo-900 dark:text-indigo-100 leading-tight",
                 language === 'hi' ? 'hindi-text' : ''
               )}>
-                {content[language].recentOrders.title}
-              </CardTitle>
-              <Button variant="ghost" size="sm" className="text-indigo-600 dark:text-indigo-400">
-                {content[language].recentOrders.viewAll}
-                <ArrowRight className="w-4 h-4 ml-1" />
-              </Button>
+                {content[language].greeting}, Priya!
+              </h1>
+              <p className={cn(
+                "text-xs sm:text-sm md:text-base text-gray-600 dark:text-gray-300 mt-1 leading-relaxed",
+                language === 'hi' ? 'hindi-text' : ''
+              )}>
+                {content[language].welcome.split(',')[1]?.trim() || 'Welcome to your personalized dashboard'}
+              </p>
             </div>
-          </CardHeader>
-          <CardContent>
-            {recentOrders.length > 0 ? (
-              <div className="space-y-4">
-                {recentOrders.map((order) => (
-                  <div key={order.id} className="flex items-center gap-3 p-3 rounded-lg bg-gray-50 dark:bg-gray-700/50">
-                    <img 
-                      src={order.image} 
-                      alt={order.product}
-                      className="w-12 h-12 rounded-lg object-cover"
-                    />
-                    <div className="flex-1">
-                      <h4 className={cn(
-                        "font-semibold text-indigo-900 dark:text-indigo-100 text-sm",
-                        language === 'hi' ? 'hindi-text' : ''
-                      )}>
-                        {language === 'hi' ? order.productHi : order.product}
-                      </h4>
-                      <p className="text-xs text-gray-600 dark:text-gray-400">by {order.artisan}</p>
-                      <div className="flex items-center justify-between mt-1">
-                        <span className="text-sm font-bold text-indigo-600 dark:text-indigo-400">{order.price}</span>
-                        <Badge variant={order.status === 'Delivered' ? 'default' : 'secondary'}>
-                          {language === 'hi' ? order.statusHi : order.status}
-                        </Badge>
-                      </div>
-                    </div>
-                  </div>
-                ))}
+            
+            {/* Right section - Controls */}
+            <div className="flex items-center gap-2 sm:gap-3 lg:gap-4 ml-4">
+              {/* Theme toggle - Hidden on mobile */}
+              <div className="hidden md:block">
+                <ThemeToggle />
               </div>
-            ) : (
-              <div className="text-center py-8">
-                <div className="w-16 h-16 mx-auto mb-4 bg-gradient-to-br from-indigo-100 to-rose-100 rounded-full flex items-center justify-center">
-                  <ShoppingBag className="w-8 h-8 text-indigo-600" />
-                </div>
-                <h3 className={cn(
-                  "text-lg font-semibold text-indigo-900 mb-2",
-                  language === 'hi' ? 'hindi-text' : ''
-                )}>
-                  {content[language].recentOrders.noOrders}
-                </h3>
-                <p className={cn(
-                  "text-gray-600",
-                  language === 'hi' ? 'hindi-text' : ''
-                )}>
-                  {content[language].recentOrders.startShopping}
-                </p>
-                <Button asChild className="mt-4">
-                  <Link to="/marketplace">
-                    {language === 'hi' ? 'अभी खरीदारी करें' : 'Start Shopping'}
-                  </Link>
-                </Button>
-              </div>
-            )}
-          </CardContent>
-        </Card>
-
-        {/* Recommendations */}
-        <Card className="bg-white/80 backdrop-blur-sm border-0 shadow-lg dark:bg-gray-800/80">
-          <CardHeader className="pb-3">
-            <CardTitle className={cn(
-              "text-lg text-indigo-900 dark:text-indigo-100",
-              language === 'hi' ? 'hindi-text' : ''
-            )}>
-              {content[language].recommendations.title}
-            </CardTitle>
-            <p className={cn(
-              "text-sm text-gray-600 dark:text-gray-400",
-              language === 'hi' ? 'hindi-text' : ''
-            )}>
-              {content[language].recommendations.basedOn}
-            </p>
-          </CardHeader>
-          <CardContent>
-            <div className="grid grid-cols-2 gap-4">
-              {recommendations.map((product) => (
-                <Link key={product.id} to={`/marketplace/product/${product.id}`}>
-                  <Card className="border-0 shadow-sm hover:shadow-lg transition-all hover-lift">
-                    <CardContent className="p-0">
-                      <img 
-                        src={product.image} 
-                        alt={product.name}
-                        className="w-full h-24 object-cover rounded-t-lg"
-                      />
-                      <div className="p-3">
-                        <h4 className={cn(
-                          "font-semibold text-indigo-900 dark:text-indigo-100 text-sm mb-1 line-clamp-2",
-                          language === 'hi' ? 'hindi-text' : ''
-                        )}>
-                          {language === 'hi' ? product.nameHi : product.name}
-                        </h4>
-                        <div className="flex items-center justify-between">
-                          <span className="text-sm font-bold text-indigo-600 dark:text-indigo-400">{product.price}</span>
-                          <div className="flex items-center">
-                            <Star className="w-3 h-3 text-amber-400 fill-current" />
-                            <span className="text-xs text-gray-600 dark:text-gray-400 ml-1">{product.rating}</span>
-                          </div>
-                        </div>
-                      </div>
-                    </CardContent>
-                  </Card>
-                </Link>
-              ))}
+              
+              {/* Language toggle */}
+              <LanguageToggle language={language} onLanguageChange={setLanguage} />
             </div>
-          </CardContent>
-        </Card>
+          </div>
+        </div>
+      </header>
 
-        {/* Featured Artisans */}
-        <Card className="bg-white/80 backdrop-blur-sm border-0 shadow-lg dark:bg-gray-800/80">
-          <CardHeader className="pb-3">
-            <CardTitle className={cn(
-              "text-lg text-indigo-900 dark:text-indigo-100",
-              language === 'hi' ? 'hindi-text' : ''
-            )}>
-              {content[language].featuredArtisans.title}
-            </CardTitle>
-          </CardHeader>
-          <CardContent>
-            <div className="space-y-4">
-              {featuredArtisans.map((artisan) => (
-                <div key={artisan.id} className="flex items-center gap-3 p-3 rounded-lg bg-gray-50 dark:bg-gray-700/50">
-                  <div className="w-12 h-12 bg-gradient-to-br from-indigo-100 to-rose-100 dark:from-indigo-900 dark:to-rose-900 rounded-full flex items-center justify-center">
-                    <User className="w-6 h-6 text-indigo-600 dark:text-indigo-400" />
-                  </div>
-                  <div className="flex-1">
-                    <h4 className="font-semibold text-indigo-900 dark:text-indigo-100">{artisan.name}</h4>
-                    <p className={cn(
-                      "text-sm text-gray-600 dark:text-gray-400",
+      {/* Enhanced Main Content */}
+      <main className="container mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="py-6 sm:py-8 lg:py-10">
+          <div className="grid grid-cols-1 xl:grid-cols-12 gap-6 lg:gap-8 xl:gap-10">
+            {/* Left Column - Stats and Quick Actions */}
+            <div className="xl:col-span-8 2xl:col-span-9">
+              <div className="space-y-6 sm:space-y-8 lg:space-y-10">
+                {/* Enhanced Stats Grid */}
+                <section>
+                  <div className="flex items-center justify-between mb-6 sm:mb-8">
+                    <h2 className={cn(
+                      "text-xl sm:text-2xl lg:text-3xl font-bold text-indigo-900 dark:text-indigo-100",
                       language === 'hi' ? 'hindi-text' : ''
                     )}>
-                      {language === 'hi' ? artisan.specializationHi : artisan.specialization}
-                    </p>
-                    <div className="flex items-center gap-2 mt-1">
-                      <div className="flex items-center">
-                        <Star className="w-3 h-3 text-amber-400 fill-current" />
-                        <span className="text-xs text-gray-600 dark:text-gray-400 ml-1">{artisan.rating}</span>
-                      </div>
-                      <span className="text-xs text-gray-500 dark:text-gray-500">•</span>
-                      <span className="text-xs text-gray-600 dark:text-gray-400">{artisan.followers} followers</span>
+                      Your Overview
+                    </h2>
+                    <div className="flex items-center gap-2">
+                      <TrendingUp className="w-5 h-5 text-green-500" />
+                      <span className="text-sm text-green-600 dark:text-green-400 font-medium">+12% this month</span>
                     </div>
                   </div>
-                  <Button size="sm" className="bg-indigo-600 hover:bg-indigo-700">
-                    <Plus className="w-3 h-3 mr-1" />
-                    {content[language].featuredArtisans.follow}
-                  </Button>
-                </div>
-              ))}
-            </div>
-          </CardContent>
-        </Card>
-      </div>
+                  
+                  <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4 lg:gap-6">
+                    {stats.map((stat, index) => {
+                      const Icon = stat.icon;
+                      return (
+                        <Card 
+                          key={index} 
+                          className="group cursor-pointer bg-white/90 dark:bg-gray-800/90 backdrop-blur-md border-0 shadow-lg hover:shadow-2xl dark:hover:shadow-indigo-500/25 transition-all duration-500 hover:scale-105 hover:-translate-y-1" 
+                          onClick={() => handleStatClick(stat.title)}
+                        >
+                          <CardContent className="p-4 sm:p-5 lg:p-6">
+                            <div className="flex items-center justify-between mb-3 sm:mb-4">
+                              <div className={cn(
+                                "w-10 h-10 sm:w-12 sm:h-12 lg:w-14 lg:h-14 rounded-xl flex items-center justify-center transition-all duration-300 group-hover:scale-110 group-hover:rotate-3", 
+                                stat.color
+                              )}>
+                                <Icon className="w-5 h-5 sm:w-6 sm:h-6 lg:w-7 lg:h-7" />
+                              </div>
+                              <div className="text-right">
+                                <div className="w-2 h-2 bg-green-400 rounded-full animate-pulse"></div>
+                              </div>
+                            </div>
+                            
+                            <div className="space-y-1 sm:space-y-2">
+                              <p className="text-2xl sm:text-3xl lg:text-4xl font-black text-indigo-900 dark:text-indigo-100 leading-none">
+                                {stat.value}
+                              </p>
+                              <p className={cn(
+                                "text-xs sm:text-sm lg:text-base text-gray-600 dark:text-gray-300 font-semibold line-clamp-2",
+                                language === 'hi' ? 'hindi-text' : ''
+                              )}>
+                                {stat.title}
+                              </p>
+                              <p className="text-xs sm:text-sm text-green-600 dark:text-green-400 font-medium">
+                                {stat.change}
+                              </p>
+                            </div>
+                          </CardContent>
+                        </Card>
+                      );
+                    })}
+                  </div>
+                </section>
 
+                {/* Enhanced Quick Actions */}
+                <section>
+                  <div className="mb-6 sm:mb-8">
+                    <h2 className={cn(
+                      "text-xl sm:text-2xl lg:text-3xl font-bold text-indigo-900 dark:text-indigo-100 mb-2",
+                      language === 'hi' ? 'hindi-text' : ''
+                    )}>
+                      {content[language].quickActions.title}
+                    </h2>
+                    <p className="text-sm sm:text-base text-gray-600 dark:text-gray-300">
+                      {language === 'hi' ? 'आपके लिए शॉर्टकट' : 'Quick shortcuts for you'}
+                    </p>
+                  </div>
+                  
+                  <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4 lg:gap-6">
+                    {quickActions.map((action, index) => {
+                      const Icon = action.icon;
+                      const colorMap = {
+                        indigo: { bg: 'bg-indigo-600', hover: 'hover:bg-indigo-700', icon: '#4f46e5', light: 'bg-indigo-50 dark:bg-indigo-900/20' },
+                        rose: { bg: 'bg-rose-600', hover: 'hover:bg-rose-700', icon: '#e11d48', light: 'bg-rose-50 dark:bg-rose-900/20' },
+                        blue: { bg: 'bg-blue-600', hover: 'hover:bg-blue-700', icon: '#2563eb', light: 'bg-blue-50 dark:bg-blue-900/20' },
+                        amber: { bg: 'bg-amber-600', hover: 'hover:bg-amber-700', icon: '#d97706', light: 'bg-amber-50 dark:bg-amber-900/20' }
+                      };
+                      const colorKey = action.color.includes('indigo') ? 'indigo' : 
+                                     action.color.includes('rose') ? 'rose' : 
+                                     action.color.includes('blue') ? 'blue' : 'amber';
+                      const colors = colorMap[colorKey];
+                      
+                      return (
+                        <Link key={index} to={action.path} className="group block">
+                          <Card className="h-full bg-white/90 dark:bg-gray-800/90 backdrop-blur-md border-0 shadow-lg hover:shadow-2xl dark:hover:shadow-indigo-500/25 transition-all duration-500 group-hover:scale-105 group-hover:-translate-y-2">
+                            <CardContent className="p-4 sm:p-6 lg:p-8 text-center h-full flex flex-col justify-center">
+                              <div className={cn(
+                                "w-12 h-12 sm:w-16 sm:h-16 lg:w-20 lg:h-20 mx-auto mb-3 sm:mb-4 rounded-2xl flex items-center justify-center transition-all duration-300 group-hover:scale-110 group-hover:rotate-6",
+                                colors.light
+                              )}>
+                                <Icon className="w-6 h-6 sm:w-8 sm:h-8 lg:w-10 lg:h-10" style={{color: colors.icon}} />
+                              </div>
+                              <h3 className={cn(
+                                "font-bold text-sm sm:text-base lg:text-lg text-indigo-900 dark:text-indigo-100 leading-tight",
+                                language === 'hi' ? 'hindi-text' : ''
+                              )}>
+                                {action.title}
+                              </h3>
+                              <div className="mt-2 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                                <ArrowRight className="w-4 h-4 text-indigo-500 mx-auto" />
+                              </div>
+                            </CardContent>
+                          </Card>
+                        </Link>
+                      );
+                    })}
+                  </div>
+                  
+                  {/* Mobile optimization hint */}
+                  {screenSize === 'mobile' && (
+                    <div className="mt-4 p-3 bg-indigo-50 dark:bg-indigo-900/20 rounded-lg border border-indigo-200 dark:border-indigo-800">
+                      <p className="text-xs text-indigo-700 dark:text-indigo-300 text-center">
+                        💡 {language === 'hi' ? 'टिप: बेहतर अनुभव के लिए अपने फोन को घुमाएं' : 'Tip: Rotate your phone for better experience'}
+                      </p>
+                    </div>
+                  )}
+                </section>
+              </div>
+            </div>
+
+            {/* Enhanced Right Column - Recent Orders and Recommendations */}
+            <aside className="xl:col-span-4 2xl:col-span-3 mt-8 xl:mt-0">
+              <div className="xl:sticky xl:top-32 space-y-6 sm:space-y-8">
+
+                {/* Enhanced Recent Orders */}
+                <Card className="bg-white/90 dark:bg-gray-800/90 backdrop-blur-md border-0 shadow-xl hover:shadow-2xl dark:shadow-indigo-500/10 transition-all duration-300">
+                  <CardHeader className="pb-4 sm:pb-6">
+                    <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-3">
+                      <div>
+                        <CardTitle className={cn(
+                          "text-lg sm:text-xl lg:text-2xl font-bold text-indigo-900 dark:text-indigo-100 flex items-center gap-2",
+                          language === 'hi' ? 'hindi-text' : ''
+                        )}>
+                          <Package className="w-5 h-5 sm:w-6 sm:h-6" />
+                          {content[language].recentOrders.title}
+                        </CardTitle>
+                        <p className="text-xs sm:text-sm text-gray-600 dark:text-gray-400 mt-1">
+                          {language === 'hi' ? 'आपके हाल के ऑर्डर' : 'Your latest purchases'}
+                        </p>
+                      </div>
+                      <Button 
+                        variant="ghost" 
+                        size="sm" 
+                        className="text-indigo-600 dark:text-indigo-400 hover:text-indigo-700 dark:hover:text-indigo-300 hover:bg-indigo-50 dark:hover:bg-indigo-900/20 self-start sm:self-center" 
+                        onClick={handleViewAllOrders}
+                      >
+                        <span className="hidden sm:inline">{content[language].recentOrders.viewAll}</span>
+                        <span className="sm:hidden">View All</span>
+                        <ArrowRight className="w-4 h-4 ml-1" />
+                      </Button>
+                    </div>
+                  </CardHeader>
+                  <CardContent className="px-4 sm:px-6">
+                    {recentOrders.length > 0 ? (
+                      <div className="space-y-3 sm:space-y-4">
+                        {recentOrders.map((order) => (
+                          <div 
+                            key={order.id} 
+                            className="group flex items-center gap-3 sm:gap-4 p-3 sm:p-4 rounded-xl bg-gradient-to-r from-gray-50 to-gray-100 dark:from-gray-700/50 dark:to-gray-600/50 hover:from-indigo-50 hover:to-rose-50 dark:hover:from-indigo-900/20 dark:hover:to-rose-900/20 transition-all duration-300 hover:shadow-md hover:scale-[1.02]"
+                          >
+                            <div className="relative flex-shrink-0">
+                              <img 
+                                src={order.images[0]} 
+                                alt={order.name}
+                                className="w-14 h-14 sm:w-16 sm:h-16 lg:w-18 lg:h-18 rounded-xl object-cover ring-2 ring-white dark:ring-gray-700 group-hover:ring-indigo-200 dark:group-hover:ring-indigo-800 transition-all duration-300"
+                                loading="lazy"
+                              />
+                              <div className="absolute -top-1 -right-1 w-3 h-3 bg-green-400 rounded-full border-2 border-white dark:border-gray-800 group-hover:scale-110 transition-transform duration-200"></div>
+                            </div>
+                            
+                            <div className="flex-1 min-w-0">
+                              <div className="flex items-start justify-between gap-2">
+                                <div className="flex-1 min-w-0">
+                                  <h4 className={cn(
+                                    "font-bold text-sm sm:text-base text-indigo-900 dark:text-indigo-100 group-hover:text-indigo-700 dark:group-hover:text-indigo-300 transition-colors duration-200 leading-tight mb-1",
+                                    language === 'hi' ? 'hindi-text' : ''
+                                  )}>
+                                    {language === 'hi' ? order.nameHi : order.name}
+                                  </h4>
+                                  <p className="text-xs sm:text-sm text-gray-600 dark:text-gray-400 mt-1 flex items-center gap-1">
+                                    <User className="w-3 h-3" />
+                                    <span>by {order.artisanName}</span>
+                                  </p>
+                                </div>
+                              </div>
+                              
+                              <div className="flex items-center justify-between mt-2 sm:mt-3">
+                                <span className="text-sm sm:text-base lg:text-lg font-black text-indigo-600 dark:text-indigo-400">
+                                  ₹{order.price}
+                                </span>
+                                <span className="text-xs text-gray-500 dark:text-gray-500 flex items-center gap-1">
+                                  <Clock className="w-3 h-3" />
+                                  {new Date(order.createdAt).toLocaleDateString(language === 'hi' ? 'hi-IN' : 'en-US', { month: 'short', day: 'numeric' })}
+                                </span>
+                              </div>
+                            </div>
+                          </div>
+                        ))}
+                      </div>
+                    ) : (
+                      <div className="text-center py-8 sm:py-12">
+                        <div className="w-20 h-20 sm:w-24 sm:h-24 mx-auto mb-6 bg-gradient-to-br from-indigo-100 via-purple-50 to-rose-100 dark:from-indigo-900 dark:via-purple-900 dark:to-rose-900 rounded-2xl flex items-center justify-center animate-pulse">
+                          <ShoppingBag className="w-10 h-10 sm:w-12 sm:h-12 text-indigo-600 dark:text-indigo-400" />
+                        </div>
+                        <h3 className={cn(
+                          "text-lg sm:text-xl font-bold text-indigo-900 dark:text-indigo-100 mb-3",
+                          language === 'hi' ? 'hindi-text' : ''
+                        )}>
+                          {content[language].recentOrders.noOrders}
+                        </h3>
+                        <p className={cn(
+                          "text-sm sm:text-base text-gray-600 dark:text-gray-300 mb-6 px-4",
+                          language === 'hi' ? 'hindi-text' : ''
+                        )}>
+                          {content[language].recentOrders.startShopping}
+                        </p>
+                        <Button asChild className="bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-700 hover:to-purple-700 text-white font-semibold px-6 py-2 rounded-xl shadow-lg hover:shadow-xl transition-all duration-300">
+                          <Link to="/marketplace" className="flex items-center gap-2">
+                            <Search className="w-4 h-4" />
+                            {language === 'hi' ? 'अभी खरीदारी करें' : 'Start Shopping'}
+                          </Link>
+                        </Button>
+                      </div>
+                    )}
+                  </CardContent>
+                </Card>
+
+                {/* Enhanced Recommendations */}
+                <Card className="bg-white/90 dark:bg-gray-800/90 backdrop-blur-md border-0 shadow-xl hover:shadow-2xl dark:shadow-indigo-500/10 transition-all duration-300">
+                  <CardHeader className="pb-4 sm:pb-6">
+                    <div className="flex items-center gap-3 mb-2">
+                      <div className="w-8 h-8 bg-gradient-to-br from-amber-400 to-orange-500 rounded-lg flex items-center justify-center">
+                        <Star className="w-4 h-4 text-white" />
+                      </div>
+                      <CardTitle className={cn(
+                        "text-lg sm:text-xl lg:text-2xl font-bold text-indigo-900 dark:text-indigo-100",
+                        language === 'hi' ? 'hindi-text' : ''
+                      )}>
+                        {content[language].recommendations.title}
+                      </CardTitle>
+                    </div>
+                    <p className={cn(
+                      "text-xs sm:text-sm text-gray-600 dark:text-gray-300 flex items-center gap-2",
+                      language === 'hi' ? 'hindi-text' : ''
+                    )}>
+                      <Activity className="w-3 h-3" />
+                      {content[language].recommendations.basedOn}
+                    </p>
+                  </CardHeader>
+                  <CardContent className="px-4 sm:px-6">
+                    <div className="space-y-3 sm:space-y-4">
+                      {recommendations.map((product) => (
+                        <Link key={product.id} to={`/marketplace/product/${product.id}`} className="group block">
+                          <Card className="border-0 shadow-sm hover:shadow-lg dark:hover:shadow-indigo-500/25 transition-all duration-500 group-hover:scale-105 group-hover:-translate-y-1 dark:bg-gray-700/50 overflow-hidden">
+                            <CardContent className="p-0">
+                              <div className="flex items-center gap-3 sm:gap-4 p-3 sm:p-4">
+                                <div className="relative flex-shrink-0">
+                                  <img 
+                                    src={product.images[0]} 
+                                    alt={product.name}
+                                    className="w-16 h-16 sm:w-18 sm:h-18 object-cover rounded-xl ring-2 ring-white dark:ring-gray-700 group-hover:ring-indigo-200 dark:group-hover:ring-indigo-800 transition-all duration-300"
+                                    loading="lazy"
+                                  />
+                                  <div className="absolute -top-1 -right-1 w-6 h-6 bg-gradient-to-br from-amber-400 to-orange-500 rounded-full flex items-center justify-center">
+                                    <Star className="w-3 h-3 text-white fill-current" />
+                                  </div>
+                                </div>
+                                
+                                <div className="flex-1 min-w-0">
+                                  <h4 className={cn(
+                                    "font-bold text-sm sm:text-base text-indigo-900 dark:text-indigo-100 mb-2 group-hover:text-indigo-700 dark:group-hover:text-indigo-300 transition-colors duration-200 leading-tight",
+                                    language === 'hi' ? 'hindi-text' : ''
+                                  )}>
+                                    {language === 'hi' ? product.nameHi : product.name}
+                                  </h4>
+                                  
+                                  <div className="flex items-center justify-between">
+                                    <span className="text-sm sm:text-base font-black text-indigo-600 dark:text-indigo-400">
+                                      ₹{product.price}
+                                    </span>
+                                    <div className="flex items-center gap-1 bg-amber-50 dark:bg-amber-900/20 px-2 py-1 rounded-full">
+                                      <Star className="w-3 h-3 text-amber-500 fill-current" />
+                                      <span className="text-xs font-semibold text-amber-700 dark:text-amber-400">{product.rating}</span>
+                                    </div>
+                                  </div>
+                                  
+                                  <div className="mt-2 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                                    <div className="flex items-center justify-between text-xs text-gray-500 dark:text-gray-400">
+                                      <span>{language === 'hi' ? 'अनुशंसित' : 'Recommended'}</span>
+                                      <ArrowRight className="w-3 h-3" />
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+                            </CardContent>
+                          </Card>
+                        </Link>
+                      ))}
+                    </div>
+                  </CardContent>
+                  </Card>
+
+                
+                {/* Performance hint for large screens */}
+                {screenSize === 'desktop' && (
+                  <div className="mt-6 p-4 bg-gradient-to-r from-indigo-50 to-purple-50 dark:from-indigo-900/20 dark:to-purple-900/20 rounded-xl border border-indigo-200 dark:border-indigo-800">
+                    <div className="flex items-center gap-3">
+                      <div className="w-8 h-8 bg-gradient-to-br from-indigo-500 to-purple-500 rounded-lg flex items-center justify-center">
+                        <TrendingUp className="w-4 h-4 text-white" />
+                      </div>
+                      <div>
+                        <h4 className="font-semibold text-indigo-900 dark:text-indigo-100 text-sm">
+                          {language === 'hi' ? 'प्रदर्शन टिप' : 'Performance Tip'}
+                        </h4>
+                        <p className="text-xs text-indigo-700 dark:text-indigo-300">
+                          {language === 'hi' 
+                            ? 'सबसे अच्छे अनुभव के लिए, अपनी स्क्रीन का पूरा उपयोग करें'
+                            : 'For the best experience, utilize your full screen real estate'
+                          }
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                )}
+              </div>
+            </aside>
+          </div>
+        </div>
+      </main>
+
+      {/* Enhanced Mobile Navigation */}
       <MobileNav language={language} />
+      
+      {/* Back to top button for mobile */}
+      {screenSize === 'mobile' && (
+        <Button
+          className="fixed bottom-24 right-4 w-12 h-12 rounded-full bg-indigo-600 hover:bg-indigo-700 shadow-lg hover:shadow-xl transition-all duration-300 z-40"
+          onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
+        >
+          <ArrowRight className="w-4 h-4 rotate-[-90deg] text-white" />
+        </Button>
+      )}
     </div>
   );
 };
