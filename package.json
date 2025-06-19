@@ -1,8 +1,11 @@
 {
-  "name": "vite_react_shadcn_ts",
+  "name": "chikankari-connect-craft",
+  "description": "A digital marketplace connecting traditional Chikankari artisans with customers worldwide",
   "private": true,
-  "version": "0.0.0",
+  "version": "1.0.0",
   "type": "module",
+  "author": "Chikankari Connect Team",
+  "keywords": ["chikankari", "artisan", "marketplace", "traditional-craft", "e-commerce"],
   "scripts": {
     "dev": "vite",
     "build": "vite build",

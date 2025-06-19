@@ -12,6 +12,7 @@ import { AppHeader } from "@/components/layout/AppHeader";
 import { cn } from "@/lib/utils";
 import { Badge } from "@/components/ui/badge";
 import { artisanProfileSchema, type ArtisanProfileData } from "@/lib/validations/profile";
+import { ZodError } from "zod";
 import { toast } from "sonner";
 
 const ArtisanProfileSetup = () => {
@@ -192,19 +193,34 @@ const ArtisanProfileSetup = () => {
   };
   
   const handleSubmitForm = async () => {
-    if (!profileData.name.trim() || !profileData.bio.trim() || profileData.specializations.length === 0) {
-      toast.error('Please fill in all required fields');
-      return;
-    }
+    // Validate using Zod schema
+    const formData = {
+      name: profileData.name,
+      location: profileData.location || '',
+      bio: profileData.bio,
+      experience: profileData.experience || '',
+      specializations: profileData.specializations,
+      workshopAddress: profileData.workshopAddress || '',
+      phoneNumber: profileData.phoneNumber || ''
+    };
     
-    setIsLoading(true);
     try {
+      const validData = artisanProfileSchema.parse(formData);
+      
+      setIsLoading(true);
       // Simulate API call
       await new Promise(resolve => setTimeout(resolve, 2000));
       navigate('/artisan/dashboard');
       toast.success('Profile setup complete!');
-    } catch (error) {
-      toast.error('Setup failed. Please try again.');
+    } catch (error: unknown) {
+      if (error instanceof ZodError) {
+        // Show the first validation error
+        const firstError = error.issues[0];
+        toast.error(firstError?.message || 'Validation failed');
+      } else {
+        console.error('Profile creation failed:', error);
+        toast.error('Setup failed. Please try again.');
+      }
     } finally {
       setIsLoading(false);
     }

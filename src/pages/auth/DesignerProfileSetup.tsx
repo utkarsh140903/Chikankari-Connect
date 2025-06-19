@@ -13,6 +13,7 @@ import { cn } from "@/lib/utils";
 import { Badge } from "@/components/ui/badge";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { designerProfileSchema, type DesignerProfileData } from "@/lib/validations/profile";
+import { ZodError } from "zod";
 import { toast } from "sonner";
 
 const DesignerProfileSetup = () => {

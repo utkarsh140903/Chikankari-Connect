@@ -7,12 +7,14 @@ import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
 import { Camera, User, Upload, X, ShoppingBag, MapPin, Mail, Heart } from "lucide-react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useSearchParams } from "react-router-dom";
 import { AppHeader } from "@/components/layout/AppHeader";
 import { cn } from "@/lib/utils";
 import { Badge } from "@/components/ui/badge";
 import { customerProfileSchema, type CustomerProfileData } from "@/lib/validations/profile";
+import { ZodError } from "zod";
 import { toast } from "sonner";
+import { api } from "@/lib/mockApi";
 
 const CustomerProfileSetup = () => {
   const [language, setLanguage] = useState<'en' | 'hi'>('en');
@@ -29,6 +31,8 @@ const CustomerProfileSetup = () => {
   const fileInputRef = useRef<HTMLInputElement>(null);
   const cameraInputRef = useRef<HTMLInputElement>(null);
   const navigate = useNavigate();
+  const [searchParams] = useSearchParams();
+  const phoneNumber = searchParams.get('phone') || '';
 
   const content = {
     en: {
@@ -155,14 +159,27 @@ const CustomerProfileSetup = () => {
     console.log("Customer Profile Data:", data);
     
     try {
-      // Simulate API call
-      await new Promise(resolve => setTimeout(resolve, 2000));
-      setIsLoading(false);
-      navigate('/marketplace');
-      toast.success('Profile setup complete!');
+      const result = await api.auth.createProfile({
+        name: data.name,
+        email: data.email,
+        phone: phoneNumber,
+        role: 'customer',
+        location: data.location,
+        preferences: data.preferences,
+        avatar: 'https://images.unsplash.com/photo-1494790108755-2616b75bd3f2?w=150&h=150&fit=crop&q=80'
+      });
+      
+      if (result.success) {
+        toast.success('Profile setup complete!');
+        navigate('/customer/dashboard');
+      } else {
+        toast.error('Setup failed. Please try again.');
+      }
     } catch (error) {
-      setIsLoading(false);
+      console.error('Profile creation failed:', error);
       toast.error('Setup failed. Please try again.');
+    } finally {
+      setIsLoading(false);
     }
   };
   
@@ -179,10 +196,13 @@ const CustomerProfileSetup = () => {
     try {
       const validData = customerProfileSchema.parse(formData);
       await onSubmit(validData);
-    } catch (error: any) {
-      if (error.errors) {
-        toast.error(error.errors[0]?.message || 'Validation failed');
+    } catch (error: unknown) {
+      if (error instanceof ZodError) {
+        // Show the first validation error
+        const firstError = error.issues[0];
+        toast.error(firstError?.message || 'Validation failed');
       } else {
+        console.error('Validation error:', error);
         toast.error('Please fill in all required fields correctly');
       }
     }

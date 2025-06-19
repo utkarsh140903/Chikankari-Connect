@@ -24,6 +24,7 @@ import ProductDetails from "./pages/marketplace/ProductDetails";
 import LearningCenter from "./pages/learn/LearningCenter";
 import Chat from "./pages/Chat";
 import Settings from "./pages/Settings";
+import CustomerDashboard from "./pages/customer/Dashboard";
 
 const queryClient = new QueryClient();
 
@@ -48,6 +49,7 @@ const AppContent = () => {
           <Route path="/artisan/products/new" element={<ProductUpload />} />
           <Route path="/artisan/orders" element={<Orders />} />
           <Route path="/designer/dashboard" element={<DesignerDashboard />} />
+          <Route path="/customer/dashboard" element={<CustomerDashboard />} />
           <Route path="/marketplace" element={<Marketplace />} />
           <Route path="/marketplace/product/:id" element={<ProductDetails />} />
           <Route path="/learn" element={<LearningCenter />} />

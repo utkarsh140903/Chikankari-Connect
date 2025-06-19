@@ -8,6 +8,8 @@ import { Phone, AlertCircle, CheckCircle, Shield, Timer } from "lucide-react";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import { AppHeader } from "@/components/layout/AppHeader";
 import { cn } from "@/lib/utils";
+import { api } from "@/lib/mockApi";
+import { toast } from "sonner";
 
 const PhoneAuth = () => {
   const [language, setLanguage] = useState<'en' | 'hi'>('en');
@@ -108,13 +110,16 @@ const PhoneAuth = () => {
     setIsLoading(true);
     
     try {
-      // Simulate API call
-      await new Promise(resolve => setTimeout(resolve, 2000));
-      
-      setStep('otp');
-      setResendTimer(30); // 30 seconds resend timer
-      setAttempts(prev => prev + 1);
-      setError('');
+      const result = await api.auth.sendOTP(`+91${phoneNumber}`);
+      if (result.success) {
+        setStep('otp');
+        setResendTimer(30); // 30 seconds resend timer
+        setAttempts(prev => prev + 1);
+        setError('');
+        toast.success(result.message);
+      } else {
+        setError('Failed to send OTP');
+      }
     } catch (error) {
       setError(content[language].networkError);
     } finally {
@@ -138,17 +143,34 @@ const PhoneAuth = () => {
     setIsLoading(true);
     
     try {
-      // Simulate API call
-      await new Promise(resolve => setTimeout(resolve, 2000));
+      const result = await api.auth.verifyOTP(`+91${phoneNumber}`, otp);
       
-      // Simulate random success/failure for demo
-      if (otp === '123456' || Math.random() > 0.3) {
-        // Navigate to role-specific setup
-        if (role && ['customer', 'artisan', 'designer'].includes(role)) {
-          navigate(`/auth/setup/${role}`);
+      if (result.success) {
+        toast.success('OTP verified successfully!');
+        
+        if (result.isNewUser) {
+          // New user - go to profile setup
+          if (role && ['customer', 'artisan', 'designer'].includes(role)) {
+            navigate(`/auth/setup/${role}?phone=${encodeURIComponent(`+91${phoneNumber}`)}`);
+          } else {
+            navigate('/');
+          }
         } else {
-          // If no role is specified, redirect to role selection
-          navigate('/');
+          // Existing user - go to appropriate dashboard
+          const user = result.user!;
+          switch (user.role) {
+            case 'customer':
+              navigate('/customer/dashboard');
+              break;
+            case 'artisan':
+              navigate('/artisan/dashboard');
+              break;
+            case 'designer':
+              navigate('/designer/dashboard');
+              break;
+            default:
+              navigate('/');
+          }
         }
       } else {
         setError(content[language].invalidOtp);
@@ -219,10 +241,10 @@ const PhoneAuth = () => {
             <CardContent className="w-full space-y-6 px-6">
               {/* Error Alert */}
               {error && (
-                <Alert variant="destructive" className="border-red-200 dark:border-red-800">
-                  <AlertCircle className="h-4 w-4" />
+                <Alert variant="destructive" className="bg-red-50 border-red-300 text-red-800 dark:bg-red-950/70 dark:border-red-700 dark:text-red-200">
+                  <AlertCircle className="h-4 w-4 text-red-600 dark:text-red-400" />
                   <AlertDescription className={cn(
-                    "text-sm",
+                    "text-sm font-medium text-red-800 dark:text-red-200",
                     language === 'hi' ? 'hindi-text' : ''
                   )}>
                     {error}
