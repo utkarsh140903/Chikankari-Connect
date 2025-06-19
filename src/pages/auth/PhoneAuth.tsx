@@ -315,7 +315,7 @@ const PhoneAuth = () => {
                   
                   {attempts > 0 && attempts < 3 && (
                     <p className={cn(
-                      "text-xs text-amber-600 dark:text-amber-400 text-center",
+                      "text-xs text-orange-600 dark:text-orange-400 text-center",
                       language === 'hi' ? 'hindi-text' : ''
                     )}>
                       {3 - attempts} {content[language].attempts}
@@ -412,7 +412,7 @@ const PhoneAuth = () => {
                     
                     {attempts > 0 && attempts < 5 && (
                       <p className={cn(
-                        "text-xs text-amber-600 dark:text-amber-400",
+                        "text-xs text-orange-600 dark:text-orange-400",
                         language === 'hi' ? 'hindi-text' : ''
                       )}>
                         {5 - attempts} {content[language].attempts}

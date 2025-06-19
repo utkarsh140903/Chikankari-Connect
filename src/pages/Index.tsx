@@ -511,7 +511,7 @@ const Index = () => {
                 reviews: 156
               }
             ].map((product, index) => (
-              <Card key={index} className="group overflow-hidden border-0 shadow-lg hover:shadow-2xl transition-all duration-500 hover:-translate-y-2 dark:bg-gray-800 dark:border-gray-700">
+              <Card key={index} className="group overflow-hidden border-0 shadow-lg hover:shadow-2xl transition-all duration-500 hover:-translate-y-2 bg-white dark:bg-gray-800 dark:border-gray-700">
                 <div className="aspect-[4/3] overflow-hidden relative">
                   <img 
                     src={product.image} 
@@ -542,7 +542,7 @@ const Index = () => {
                           className={cn(
                             "w-4 h-4",
                             i < Math.floor(product.rating) 
-                              ? 'text-yellow-400 fill-current' 
+                              ? 'text-orange-400 fill-current'
                               : 'text-gray-300'
                           )} 
                         />
@@ -604,7 +604,7 @@ const Index = () => {
                   <CardContent className="p-8">
                     <div className="flex justify-center mb-4">
                       {[...Array(testimonial.rating)].map((_, i) => (
-                        <Star key={i} className="w-5 h-5 text-yellow-400 fill-current" />
+                        <Star key={i} className="w-5 h-5 text-orange-400 fill-current" />
                       ))}
                     </div>
                     <blockquote className={cn(
