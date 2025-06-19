@@ -105,7 +105,7 @@ const Settings = () => {
 
       <div className="max-w-md mx-auto p-4 space-y-6">
         {/* Account Settings */}
-        <Card className="bg-white/80 backdrop-blur-sm border-0 shadow-lg">
+        <Card className="bg-white border-0 shadow-lg card-white">
           <CardHeader className="pb-3">
             <CardTitle className={cn(
               "text-lg text-indigo-900",
@@ -145,7 +145,7 @@ const Settings = () => {
         </Card>
 
         {/* Notifications */}
-        <Card className="bg-white/80 backdrop-blur-sm border-0 shadow-lg">
+        <Card className="bg-white border-0 shadow-lg card-white">
           <CardHeader className="pb-3">
             <CardTitle className={cn(
               "text-lg text-indigo-900 flex items-center gap-2",
@@ -213,7 +213,7 @@ const Settings = () => {
         </Card>
 
         {/* Language & Others */}
-        <Card className="bg-white/80 backdrop-blur-sm border-0 shadow-lg">
+        <Card className="bg-white border-0 shadow-lg card-white">
           <CardContent className="p-4 space-y-4">
             <div className="flex items-center justify-between py-2">
               <div className="flex items-center gap-3">

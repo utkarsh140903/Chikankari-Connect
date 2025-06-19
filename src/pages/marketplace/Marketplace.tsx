@@ -246,7 +246,7 @@ const Marketplace = () => {
             {products.map((product) => (
               <div key={product.id} className="relative">
                 <Link to={`/marketplace/product/${product.id}`}>
-                  <Card className="bg-white/80 backdrop-blur-sm border-0 shadow-lg hover:shadow-xl transition-all hover-lift dark:bg-gray-800/80 dark:border-gray-700 h-full">
+                  <Card className="bg-white border-0 shadow-lg hover:shadow-xl transition-all hover-lift dark:bg-gray-800/80 dark:border-gray-700 h-full card-white">
                     <CardContent className="p-0 h-full flex flex-col">
                       <div className="relative">
                         <img 
