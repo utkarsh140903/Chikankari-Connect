@@ -243,7 +243,7 @@ const ArtisanProfileSetup = () => {
           <Card className="w-full bg-white/90 backdrop-blur-sm border-0 shadow-xl dark:bg-gray-800/90 dark:border-gray-700">
             <CardHeader className="pb-3 px-4 sm:px-6">
               <div className="flex items-center gap-3 mb-2">
-                <div className="w-12 h-12 bg-gradient-to-br from-amber-100 to-orange-100 dark:from-amber-900 dark:to-orange-900 rounded-full flex items-center justify-center">
+                <div className="w-12 h-12 bg-gradient-to-br from-white to-gray-50 dark:from-amber-900 dark:to-orange-900 border border-amber-200 dark:border-amber-700 rounded-full flex items-center justify-center">
                   <Scissors className="w-6 h-6 text-amber-600 dark:text-amber-400" />
                 </div>
                 <CardTitle className={cn(
@@ -410,7 +410,7 @@ const ArtisanProfileSetup = () => {
                   </label>
                   
                   {previewUrl ? (
-                    <div className="w-full border-2 border-amber-200 dark:border-amber-600 rounded-lg p-3 sm:p-4 text-center bg-amber-50/50 dark:bg-amber-900/20 relative">
+                    <div className="w-full border-2 border-amber-200 dark:border-amber-600 rounded-lg p-3 sm:p-4 text-center bg-white dark:bg-amber-900/20 relative">
                       <div className="relative inline-block">
                         <img 
                           src={previewUrl} 
@@ -429,7 +429,7 @@ const ArtisanProfileSetup = () => {
                       </div>
                     </div>
                   ) : (
-                    <div className="w-full border-2 border-dashed border-amber-200 dark:border-amber-600 rounded-lg p-3 sm:p-6 text-center bg-amber-50/50 dark:bg-amber-900/20">
+                    <div className="w-full border-2 border-dashed border-amber-200 dark:border-amber-600 rounded-lg p-3 sm:p-6 text-center bg-white dark:bg-amber-900/20">
                       <User className="w-8 h-8 sm:w-12 sm:h-12 text-amber-400 dark:text-amber-300 mx-auto mb-2 sm:mb-3" />
                       <p className={cn(
                         "text-gray-600 dark:text-gray-400 mb-3 sm:mb-4 text-xs sm:text-sm leading-relaxed break-words px-1",

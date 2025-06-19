@@ -171,7 +171,7 @@ const CustomerDashboard = () => {
       title: content[language].stats.reviews,
       value: "8",
       icon: Star,
-      color: "bg-amber-100 text-amber-600 dark:bg-amber-900/30 dark:text-amber-400",
+                      color: "bg-white text-amber-600 dark:bg-amber-900/30 dark:text-amber-400 border border-amber-200 dark:border-amber-800",
       change: "Average 4.9 rating"
     }
   ];
@@ -551,7 +551,7 @@ const CustomerDashboard = () => {
                                     <span className="text-sm sm:text-base font-black text-indigo-600 dark:text-indigo-400">
                                       ₹{product.price}
                                     </span>
-                                    <div className="flex items-center gap-1 bg-amber-50 dark:bg-amber-900/20 px-2 py-1 rounded-full">
+                                    <div className="flex items-center gap-1 bg-white dark:bg-amber-900/20 border border-amber-200 dark:border-amber-800 px-2 py-1 rounded-full">
                                       <Star className="w-3 h-3 text-amber-500 fill-current" />
                                       <span className="text-xs font-semibold text-amber-700 dark:text-amber-400">{product.rating}</span>
                                     </div>
