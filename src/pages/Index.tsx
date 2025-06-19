@@ -411,14 +411,14 @@ const Index = () => {
           )}>
             {content[language].heritage.description}
           </p>
-          <div className="grid grid-cols-3 gap-8 text-center">
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 sm:gap-8 text-center">
             {content[language].heritage.stats.map((stat, index) => (
-              <div key={index} className="p-8 bg-white/50 dark:bg-gray-800/50 rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-1">
-                <div className="text-4xl font-bold text-indigo-600 dark:text-indigo-400 mb-3 animate-pulse">
+              <div key={index} className="p-4 sm:p-8 bg-white/50 dark:bg-gray-800/50 rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-1">
+                <div className="text-2xl sm:text-4xl font-bold text-indigo-600 dark:text-indigo-400 mb-2 sm:mb-3 animate-pulse">
                   {stat.value}
                 </div>
                 <div className={cn(
-                  "text-gray-600 font-semibold dark:text-gray-300",
+                  "text-sm sm:text-base text-gray-600 font-semibold dark:text-gray-300 px-2 sm:px-0",
                   language === 'hi' ? 'hindi-text' : ''
                 )}>
                   {stat.label}
