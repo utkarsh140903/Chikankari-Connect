@@ -68,9 +68,9 @@ const ProductDetails = () => {
     price: "₹2,500",
     originalPrice: "₹3,000",
     images: [
-      "https://images.unsplash.com/photo-1583391733956-6c78c2018580?w=400&h=400&fit=crop&q=80",
-      "https://images.unsplash.com/photo-1594633312681-425c7b97ccd1?w=400&h=400&fit=crop&q=80",
-      "https://images.unsplash.com/photo-1583391733975-b72f1ac82257?w=400&h=400&fit=crop&q=80"
+      "https://i.etsystatic.com/16387285/r/il/0dfa61/2532111172/il_fullxfull.2532111172_hl3g.jpg",
+      "https://5.imimg.com/data5/SELLER/Default/2022/12/DH/ND/LH/60400022/chikankari-white-kurta-500x500.jpg",
+      "https://cdn.shopify.com/s/files/1/0578/7162/7685/products/IMG_0425_1024x1024.jpg?v=1640264092"
     ],
     description: "Beautiful hand-embroidered white kurta with traditional chikankari work. Perfect for festivals and special occasions.",
     descriptionHi: "पारंपरिक चिकनकारी काम के साथ सुंदर हाथ से कढ़ाई किया गया सफेद कुर्ता। त्योहारों और विशेष अवसरों के लिए बिल्कुल सही।",
@@ -96,7 +96,7 @@ const ProductDetails = () => {
     <div className="min-h-screen bg-gradient-to-br from-indigo-50 via-white to-rose-50 dark:from-gray-900 dark:via-gray-800 dark:to-gray-900">
       {/* Header */}
       <div className="bg-white/80 backdrop-blur-sm border-b border-gray-200 p-4 sticky top-0 z-10 dark:bg-gray-900/80 dark:border-gray-700">
-        <div className="flex justify-between items-center max-w-md mx-auto">
+        <div className="flex justify-between items-center max-w-6xl mx-auto">
           <Link to="/marketplace" className="p-2 hover:bg-white/50 rounded-lg transition-colors">
             <ArrowLeft className="w-6 h-6 text-indigo-600" />
           </Link>
@@ -119,13 +119,13 @@ const ProductDetails = () => {
         </div>
       </div>
 
-      <div className="max-w-md mx-auto">
+      <div className="max-w-6xl mx-auto lg:grid lg:grid-cols-2 lg:gap-8">
         {/* Product Images */}
-        <div className="relative">
+        <div className="relative lg:sticky lg:top-20">
           <img 
             src={product.images[currentImageIndex]} 
             alt={product.name}
-            className="w-full h-80 object-cover"
+            className="w-full h-80 md:h-96 lg:h-[500px] object-cover rounded-lg"
           />
           <div className="absolute bottom-4 left-1/2 transform -translate-x-1/2 flex gap-2">
             {product.images.map((_, index) => (
@@ -133,15 +133,35 @@ const ProductDetails = () => {
                 key={index}
                 onClick={() => setCurrentImageIndex(index)}
                 className={cn(
-                  "w-2 h-2 rounded-full transition-colors",
+                  "w-3 h-3 md:w-4 md:h-4 rounded-full transition-colors",
                   index === currentImageIndex ? "bg-white" : "bg-white/50"
                 )}
               />
             ))}
           </div>
+          
+          {/* Thumbnail images for desktop */}
+          <div className="hidden lg:flex mt-4 gap-2">
+            {product.images.map((image, index) => (
+              <button
+                key={index}
+                onClick={() => setCurrentImageIndex(index)}
+                className={cn(
+                  "w-20 h-20 rounded-lg overflow-hidden border-2 transition-colors",
+                  index === currentImageIndex ? "border-indigo-600" : "border-gray-200"
+                )}
+              >
+                <img 
+                  src={image} 
+                  alt={`${product.name} ${index + 1}`}
+                  className="w-full h-full object-cover"
+                />
+              </button>
+            ))}
+          </div>
         </div>
 
-        <div className="p-4 space-y-6">
+        <div className="p-4 md:p-6 lg:p-8 space-y-6">
           {/* Product Info */}
           <div>
             <h1 className={cn(
@@ -168,24 +188,61 @@ const ProductDetails = () => {
           </div>
 
           {/* Action Buttons */}
-          <div className="grid grid-cols-2 gap-3">
-            <Button 
-              variant="outline" 
-              className={cn(
-                "flex items-center gap-2",
+          <div className="space-y-3">
+            {/* Mobile buttons */}
+            <div className="lg:hidden grid grid-cols-2 gap-3">
+              <Button 
+                variant="outline" 
+                className={cn(
+                  "flex items-center gap-2",
+                  language === 'hi' ? 'hindi-text' : ''
+                )}
+              >
+                <MessageCircle className="w-4 h-4" />
+                {content[language].sendMessage}
+              </Button>
+              <Button className={cn(
+                "bg-indigo-600 hover:bg-indigo-700 flex items-center gap-2",
                 language === 'hi' ? 'hindi-text' : ''
-              )}
-            >
-              <MessageCircle className="w-4 h-4" />
-              {content[language].sendMessage}
-            </Button>
-            <Button className={cn(
-              "bg-indigo-600 hover:bg-indigo-700 flex items-center gap-2",
-              language === 'hi' ? 'hindi-text' : ''
-            )}>
-              <ShoppingCart className="w-4 h-4" />
-              {content[language].addToCart}
-            </Button>
+              )}>
+                <ShoppingCart className="w-4 h-4" />
+                {content[language].addToCart}
+              </Button>
+            </div>
+            
+            {/* Desktop buttons */}
+            <div className="hidden lg:flex gap-4">
+              <Button 
+                variant="outline" 
+                size="lg"
+                className={cn(
+                  "flex-1 flex items-center gap-2",
+                  language === 'hi' ? 'hindi-text' : ''
+                )}
+              >
+                <MessageCircle className="w-5 h-5" />
+                {content[language].sendMessage}
+              </Button>
+              <Button 
+                size="lg"
+                className={cn(
+                  "flex-1 bg-indigo-600 hover:bg-indigo-700 flex items-center gap-2",
+                  language === 'hi' ? 'hindi-text' : ''
+                )}
+              >
+                <ShoppingCart className="w-5 h-5" />
+                {content[language].addToCart}
+              </Button>
+              <Button 
+                size="lg"
+                className={cn(
+                  "flex-1 bg-rose-600 hover:bg-rose-700 text-white",
+                  language === 'hi' ? 'hindi-text' : ''
+                )}
+              >
+                {content[language].buyNow}
+              </Button>
+            </div>
           </div>
 
           {/* Description */}
@@ -303,8 +360,8 @@ const ProductDetails = () => {
         </div>
       </div>
 
-      {/* Bottom Action Bar */}
-      <div className="fixed bottom-0 left-0 right-0 bg-white/90 backdrop-blur-sm border-t p-4 dark:bg-gray-900/90 dark:border-gray-700">
+      {/* Bottom Action Bar - Only show on mobile */}
+      <div className="lg:hidden fixed bottom-0 left-0 right-0 bg-white/90 backdrop-blur-sm border-t p-4 dark:bg-gray-900/90 dark:border-gray-700">
         <div className="max-w-md mx-auto">
           <Button className={cn(
             "w-full bg-indigo-600 hover:bg-indigo-700 text-lg py-3",

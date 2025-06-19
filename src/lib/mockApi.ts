@@ -47,6 +47,20 @@ const initializeData = () => {
   }
 };
 
+// Force refresh data with latest mock data
+const refreshData = () => {
+  try {
+    localStorage.setItem(STORAGE_KEYS.PRODUCTS, JSON.stringify(mockProducts));
+    localStorage.setItem(STORAGE_KEYS.ARTISANS, JSON.stringify(mockArtisans));
+    localStorage.setItem(STORAGE_KEYS.USERS, JSON.stringify(mockUsers));
+    localStorage.setItem(STORAGE_KEYS.ORDERS, JSON.stringify(mockOrders));
+    localStorage.setItem(STORAGE_KEYS.MESSAGES, JSON.stringify(mockChatMessages));
+    console.log(`Data refreshed successfully! Now have ${mockProducts.length} products.`);
+  } catch (error) {
+    console.error('Failed to refresh data:', error);
+  }
+};
+
 // Initialize data on load
 initializeData();
 
@@ -376,6 +390,24 @@ export const cartApi = {
   }
 };
 
+// Admin/Utility API
+export const utilApi = {
+  // Refresh all data with latest mock data
+  refreshData: () => {
+    refreshData();
+  },
+  
+  // Check if data needs refresh (you can call this to see if products count matches)
+  checkDataVersion: () => {
+    const currentProducts = JSON.parse(localStorage.getItem(STORAGE_KEYS.PRODUCTS) || '[]') as Product[];
+    return {
+      currentCount: currentProducts.length,
+      expectedCount: mockProducts.length,
+      needsRefresh: currentProducts.length !== mockProducts.length
+    };
+  }
+};
+
 // Export all APIs
 export const api = {
   auth: authApi,
@@ -383,7 +415,8 @@ export const api = {
   artisans: artisansApi,
   orders: ordersApi,
   chat: chatApi,
-  cart: cartApi
+  cart: cartApi,
+  util: utilApi
 };
 
 export default api;
