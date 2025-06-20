@@ -6,14 +6,15 @@ import { LanguageToggle } from "@/components/LanguageToggle";
 import { ThemeToggle } from "@/components/ThemeToggle";
 import { cn } from "@/lib/utils";
 import { 
-  ArrowRight, 
-  Sparkles, 
-  Users, 
-  ShoppingBag, 
-  BookOpen, 
-  Star, 
-  Heart, 
-  Palette, 
+  ArrowRight,
+  ArrowLeft,
+  Sparkles,
+  Users,
+  ShoppingBag,
+  BookOpen,
+  Star,
+  Heart,
+  Palette,
   Scissors,
   Zap,
   Play,
@@ -22,7 +23,12 @@ import {
   Award,
   MessageCircle,
   ChevronRight,
-  MapPin
+  MapPin,
+  GanttChart,
+  Landmark,
+  ExternalLink,
+  CheckCircle,
+  Medal
 } from "lucide-react";
 
 const Index = () => {
@@ -40,6 +46,20 @@ const Index = () => {
 
   const content = {
     en: {
+      schemes: {
+        title: "Government Support & Schemes",
+        subtitle: "Access financial aid and development programs for artisans",
+        description: "Discover various government initiatives designed to support traditional artisans through financial assistance, skill development, and business growth opportunities.",
+        button: "Explore Schemes",
+        featuredTitle: "PM Vishwakarma Yojana",
+        featuredSubtitle: "Financial support and skill development for traditional artisans",
+        featuredSchemes: [
+          "PM Vishwakarma Yojana",
+          "Skill India Mission",
+          "MUDRA Yojana",
+          "Stand Up India"
+        ]
+      },
       hero: {
         title: "Chikankari Connect",
         subtitle: "Empowering Traditional Artisans",
@@ -132,6 +152,20 @@ const Index = () => {
       }
     },
     hi: {
+      schemes: {
+        title: "सरकारी समर्थन और योजनाएं",
+        subtitle: "कारीगरों के लिए वित्तीय सहायता और विकास कार्यक्रम प्राप्त करें",
+        description: "वित्तीय सहायता, कौशल विकास और व्यापार विकास अवसरों के माध्यम से पारंपरिक कारीगरों का समर्थन करने के लिए डिज़ाइन की गई विभिन्न सरकारी पहलों की खोज करें।",
+        button: "योजनाएं देखें",
+        featuredTitle: "पीएम विश्वकर्मा योजना",
+        featuredSubtitle: "पारंपरिक कारीगरों के लिए वित्तीय सहायता और कौशल विकास",
+        featuredSchemes: [
+          "पीएम विश्वकर्मा योजना",
+          "कौशल भारत मिशन",
+          "मुद्रा योजना",
+          "स्टैंड अप इंडिया"
+        ]
+      },
       hero: {
         title: "चिकनकारी कनेक्ट",
         subtitle: "पारंपरिक कारीगरों को सशक्त बनाना",
@@ -579,8 +613,74 @@ const Index = () => {
         </div>
       </section>
 
+      {/* Government Schemes Section */}
+      <section className="py-16 bg-gradient-to-br from-indigo-50/50 via-white to-rose-50/50 dark:from-indigo-950/50 dark:via-gray-900 dark:to-rose-950/50">
+        <div className="container px-4 mx-auto">
+          <div className="max-w-5xl mx-auto">
+            <Link to="/schemes" className="block group">
+              <Card className="border-0 shadow-xl hover:shadow-2xl transition-all duration-500 bg-white/90 dark:bg-gray-800/90 overflow-hidden">
+                <CardContent className="p-8 sm:p-10">
+                  <div className="flex flex-col md:flex-row items-center gap-8">
+                    {/* Icon Grid */}
+                    <div className="flex-shrink-0 grid grid-cols-2 gap-4">
+                      <div className="w-16 h-16 sm:w-20 sm:h-20 rounded-2xl bg-indigo-100 dark:bg-indigo-900/30 flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
+                        <GanttChart className="w-8 h-8 sm:w-10 sm:h-10 text-indigo-600 dark:text-indigo-400" />
+                      </div>
+                      <div className="w-16 h-16 sm:w-20 sm:h-20 rounded-2xl bg-rose-100 dark:bg-rose-900/30 flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
+                        <Medal className="w-8 h-8 sm:w-10 sm:h-10 text-rose-600 dark:text-rose-400" />
+                      </div>
+                      <div className="w-16 h-16 sm:w-20 sm:h-20 rounded-2xl bg-orange-100 dark:bg-orange-900/30 flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
+                        <Landmark className="w-8 h-8 sm:w-10 sm:h-10 text-orange-600 dark:text-orange-400" />
+                      </div>
+                      <div className="w-16 h-16 sm:w-20 sm:h-20 rounded-2xl bg-green-100 dark:bg-green-900/30 flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
+                        <Sparkles className="w-8 h-8 sm:w-10 sm:h-10 text-green-600 dark:text-green-400" />
+                      </div>
+                    </div>
+
+                    {/* Content */}
+                    <div className="flex-1 text-center md:text-left">
+                      <h2 className={cn(
+                        "text-2xl sm:text-3xl font-bold text-gray-900 dark:text-gray-100 mb-4",
+                        language === 'hi' ? 'hindi-text' : ''
+                      )}>
+                        {content[language].schemes.title}
+                      </h2>
+                      <p className={cn(
+                        "text-gray-600 dark:text-gray-300 mb-6 text-lg",
+                        language === 'hi' ? 'hindi-text' : ''
+                      )}>
+                        {content[language].schemes.description}
+                      </p>
+                      <div className="flex flex-wrap gap-4 justify-center md:justify-start">
+                        <Button 
+                          size="lg" 
+                          className="bg-gradient-to-r from-indigo-600 to-rose-600 hover:from-indigo-700 hover:to-rose-700 text-white shadow-lg group-hover:shadow-xl transition-all duration-300"
+                        >
+                          {content[language].schemes.button}
+                          <ArrowRight className="w-5 h-5 ml-2 group-hover:translate-x-1 transition-transform" />
+                        </Button>
+                        <div className="flex items-center gap-6">
+                          <div className="flex items-center gap-2">
+                            <CheckCircle className="w-5 h-5 text-green-500" />
+                            <span className="text-gray-600 dark:text-gray-300">4+ {language === 'hi' ? 'योजनाएं' : 'Schemes'}</span>
+                          </div>
+                          <div className="flex items-center gap-2">
+                            <Users className="w-5 h-5 text-blue-500" />
+                            <span className="text-gray-600 dark:text-gray-300">500+ {language === 'hi' ? 'लाभार्थी' : 'Beneficiaries'}</span>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </CardContent>
+              </Card>
+            </Link>
+          </div>
+        </div>
+      </section>
+
       {/* Testimonials Section */}
-      <section className="px-4 py-16 bg-indigo-50 dark:bg-gray-800">
+      <section className="px-4 py-16 bg-white/50 dark:bg-gray-900/50">
         <div className="max-w-4xl mx-auto text-center">
           <h3 className={cn(
             "text-3xl font-bold text-indigo-900 mb-12 dark:text-indigo-100",
@@ -650,6 +750,7 @@ const Index = () => {
         </div>
       </section>
 
+
       {/* Newsletter/CTA Section */}
       <section className="px-4 py-16 bg-gradient-to-r from-indigo-600 to-rose-600 text-white">
         <div className="max-w-4xl mx-auto text-center">
@@ -715,8 +816,9 @@ const Index = () => {
             <div>
               <h5 className="font-semibold mb-4">{language === 'hi' ? 'त्वरित लिंक' : 'Quick Links'}</h5>
               <ul className="space-y-2 text-gray-400">
-                <li><Link to="/marketplace" className="hover:text-white transition-colors">{language === 'hi' ? 'बाज़ार' : 'Marketplace'}</Link></li>
+                <li><Link to="/marketplace" className="hover:text-white transition-colors">{language === 'hi' ? 'मार्केटप्लेस' : 'Marketplace'}</Link></li>
                 <li><Link to="/learn" className="hover:text-white transition-colors">{language === 'hi' ? 'सीखना' : 'Learn'}</Link></li>
+                <li><Link to="/schemes" className="hover:text-white transition-colors">{language === 'hi' ? 'सरकारी योजनाएं' : 'Govt Schemes'}</Link></li>
                 <li><Link to="/auth/phone" className="hover:text-white transition-colors">{language === 'hi' ? 'साइन अप' : 'Sign Up'}</Link></li>
               </ul>
             </div>

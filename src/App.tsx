@@ -24,6 +24,7 @@ import ProductDetails from "./pages/marketplace/ProductDetails";
 import LearningCenter from "./pages/learn/LearningCenter";
 import Chat from "./pages/Chat";
 import Settings from "./pages/Settings";
+import Schemes from "./pages/Schemes";
 import CustomerDashboard from "./pages/customer/Dashboard";
 import CustomerProfile from "./pages/customer/Profile";
 
@@ -57,6 +58,7 @@ const AppContent = () => {
           <Route path="/learn" element={<LearningCenter />} />
           <Route path="/chat" element={<Chat />} />
           <Route path="/settings" element={<Settings />} />
+          <Route path="/schemes" element={<Schemes />} />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />
         </Routes>
