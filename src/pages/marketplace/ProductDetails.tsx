@@ -174,14 +174,14 @@ const ProductDetails = () => {
             <div className="flex items-center gap-2 mb-3">
               <span className="text-2xl font-bold text-indigo-600">{product.price}</span>
               <span className="text-lg text-gray-500 line-through">{product.originalPrice}</span>
-              <Badge variant="secondary" className="bg-green-100 text-green-800">
+              <Badge variant="secondary" className="bg-rose-100 text-rose-800 dark:bg-rose-900/30 dark:text-rose-300">
                 17% OFF
               </Badge>
             </div>
 
             <div className="flex items-center gap-4 text-sm text-gray-600">
               <div className="flex items-center gap-1">
-                <Star className="w-4 h-4 fill-amber-400 text-amber-400" />
+                <Star className="w-4 h-4 fill-indigo-500 text-indigo-500" />
                 <span>{product.artisan.rating} ({product.artisan.reviews} reviews)</span>
               </div>
             </div>
@@ -338,7 +338,7 @@ const ProductDetails = () => {
                       {product.artisan.name}
                     </h4>
                     {product.artisan.verified && (
-                      <Award className="w-4 h-4 text-green-600" />
+                      <Award className="w-4 h-4 text-indigo-600 dark:text-indigo-400" />
                     )}
                   </div>
                   

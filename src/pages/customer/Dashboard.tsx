@@ -171,7 +171,7 @@ const CustomerDashboard = () => {
       title: content[language].stats.reviews,
       value: "8",
       icon: Star,
-                      color: "bg-white text-amber-600 dark:bg-amber-900/30 dark:text-amber-400 border border-amber-200 dark:border-amber-800",
+                      color: "bg-white text-indigo-600 dark:bg-indigo-900/30 dark:text-indigo-400 border border-indigo-200 dark:border-indigo-800",
       change: "Average 4.9 rating"
     }
   ];
@@ -198,7 +198,7 @@ const CustomerDashboard = () => {
     {
       title: content[language].quickActions.findArtisans,
       icon: User,
-      color: "bg-amber-600 hover:bg-amber-700",
+      color: "bg-indigo-600 hover:bg-indigo-700",
       path: "/customer/artisans"
     }
   ];
@@ -346,11 +346,11 @@ const CustomerDashboard = () => {
                         indigo: { bg: 'bg-indigo-600', hover: 'hover:bg-indigo-700', icon: '#4f46e5', light: 'bg-indigo-50 dark:bg-indigo-900/20' },
                         rose: { bg: 'bg-rose-600', hover: 'hover:bg-rose-700', icon: '#e11d48', light: 'bg-rose-50 dark:bg-rose-900/20' },
                         blue: { bg: 'bg-blue-600', hover: 'hover:bg-blue-700', icon: '#2563eb', light: 'bg-blue-50 dark:bg-blue-900/20' },
-                        amber: { bg: 'bg-amber-600', hover: 'hover:bg-amber-700', icon: '#d97706', light: 'bg-amber-50 dark:bg-amber-900/20' }
+                        emerald: { bg: 'bg-emerald-600', hover: 'hover:bg-emerald-700', icon: '#059669', light: 'bg-emerald-50 dark:bg-emerald-900/20' }
                       };
                       const colorKey = action.color.includes('indigo') ? 'indigo' : 
                                      action.color.includes('rose') ? 'rose' : 
-                                     action.color.includes('blue') ? 'blue' : 'amber';
+                                     action.color.includes('blue') ? 'blue' : 'emerald';
                       const colors = colorMap[colorKey];
                       
                       return (
@@ -502,7 +502,7 @@ const CustomerDashboard = () => {
                 <Card className="bg-white/90 dark:bg-gray-800/90 backdrop-blur-md border-0 shadow-xl hover:shadow-2xl dark:shadow-indigo-500/10 transition-all duration-300">
                   <CardHeader className="pb-4 sm:pb-6">
                     <div className="flex items-center gap-3 mb-2">
-                      <div className="w-8 h-8 bg-gradient-to-br from-amber-400 to-orange-500 rounded-lg flex items-center justify-center">
+                      <div className="w-8 h-8 bg-gradient-to-br from-indigo-500 to-rose-500 rounded-lg flex items-center justify-center">
                         <Star className="w-4 h-4 text-white" />
                       </div>
                       <CardTitle className={cn(
@@ -534,7 +534,7 @@ const CustomerDashboard = () => {
                                     className="w-16 h-16 sm:w-18 sm:h-18 object-cover rounded-xl ring-2 ring-white dark:ring-gray-700 group-hover:ring-indigo-200 dark:group-hover:ring-indigo-800 transition-all duration-300"
                                     loading="lazy"
                                   />
-                                  <div className="absolute -top-1 -right-1 w-6 h-6 bg-gradient-to-br from-amber-400 to-orange-500 rounded-full flex items-center justify-center">
+                                  <div className="absolute -top-1 -right-1 w-6 h-6 bg-gradient-to-br from-indigo-500 to-rose-500 rounded-full flex items-center justify-center">
                                     <Star className="w-3 h-3 text-white fill-current" />
                                   </div>
                                 </div>
@@ -551,9 +551,9 @@ const CustomerDashboard = () => {
                                     <span className="text-sm sm:text-base font-black text-indigo-600 dark:text-indigo-400">
                                       ₹{product.price}
                                     </span>
-                                    <div className="flex items-center gap-1 bg-white dark:bg-amber-900/20 border border-amber-200 dark:border-amber-800 px-2 py-1 rounded-full">
-                                      <Star className="w-3 h-3 text-amber-500 fill-current" />
-                                      <span className="text-xs font-semibold text-amber-700 dark:text-amber-400">{product.rating}</span>
+                                    <div className="flex items-center gap-1 bg-white dark:bg-indigo-900/20 border border-indigo-200 dark:border-indigo-800 px-2 py-1 rounded-full">
+                                      <Star className="w-3 h-3 text-indigo-500 fill-current" />
+                                      <span className="text-xs font-semibold text-indigo-700 dark:text-indigo-400">{product.rating}</span>
                                     </div>
                                   </div>
                                   

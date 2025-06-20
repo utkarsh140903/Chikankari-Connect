@@ -180,7 +180,7 @@ const ArtisanProfile = () => {
       label: content[language].rating,
       value: artisan.stats.rating.toString(),
       icon: Star,
-      color: "text-amber-600 bg-amber-100"
+      color: "text-indigo-600 bg-indigo-100 dark:bg-indigo-900/30 dark:text-indigo-400"
     },
     {
       label: content[language].orders,
@@ -243,7 +243,7 @@ const ArtisanProfile = () => {
                         <Camera className="w-8 h-8 lg:w-10 lg:h-10 text-indigo-600" />
                       </div>
                       {artisan.verified && (
-                        <div className="absolute -bottom-1 -right-1 bg-green-600 rounded-full p-1 lg:p-1.5">
+                        <div className="absolute -bottom-1 -right-1 bg-indigo-600 dark:bg-indigo-500 rounded-full p-1 lg:p-1.5">
                           <Award className="w-4 h-4 lg:w-5 lg:h-5 text-white" />
                         </div>
                       )}
@@ -257,7 +257,7 @@ const ArtisanProfile = () => {
                     </h2>
 
                     {artisan.verified && (
-                      <Badge className="bg-green-100 text-green-800 mb-3 lg:mb-4">
+                      <Badge className="bg-indigo-100 text-indigo-800 dark:bg-indigo-900/30 dark:text-indigo-300 mb-3 lg:mb-4">
                         <Award className="w-3 h-3 mr-1" />
                         {content[language].verified}
                       </Badge>
@@ -394,9 +394,9 @@ const ArtisanProfile = () => {
                   <CardContent>
                     <div className="space-y-3 lg:space-y-4">
                       {(language === 'hi' ? artisan.achievementsHi : artisan.achievements).map((achievement, index) => (
-                        <div key={index} className="flex items-center gap-3 lg:gap-4 p-2 lg:p-3 rounded-lg hover:bg-amber-50 transition-colors duration-200">
-                          <div className="w-8 h-8 lg:w-10 lg:h-10 bg-amber-100 rounded-full flex items-center justify-center flex-shrink-0">
-                            <Award className="w-4 h-4 lg:w-5 lg:h-5 text-amber-600" />
+                        <div key={index} className="flex items-center gap-3 lg:gap-4 p-2 lg:p-3 rounded-lg hover:bg-indigo-50 dark:hover:bg-indigo-900/20 transition-colors duration-200">
+                          <div className="w-8 h-8 lg:w-10 lg:h-10 bg-indigo-100 dark:bg-indigo-900/30 rounded-full flex items-center justify-center flex-shrink-0">
+                            <Award className="w-4 h-4 lg:w-5 lg:h-5 text-indigo-600 dark:text-indigo-400" />
                           </div>
                           <span className={cn(
                             "font-medium text-indigo-900 lg:text-lg",
